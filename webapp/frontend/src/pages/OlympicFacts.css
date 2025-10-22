@@ -1,0 +1,155 @@
+.olympic-facts-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-top: 2rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.facts-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.facts-section {
+  margin-bottom: 4rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.facts-section h2 {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  padding: 1.5rem 2rem 0 2rem;
+  border-bottom: 3px solid #0081C8;
+  position: relative;
+}
+
+.facts-section h2::before {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 2rem;
+  width: 60px;
+  height: 3px;
+  background-color: #FCB131;
+}
+
+.fact-item {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-left: 5px solid #0081C8;
+  padding: 2rem;
+  margin: 0 2rem 1.5rem 2rem;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.fact-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  border-left-color: #FCB131;
+}
+
+.fact-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, #0081C8 0%, #FCB131 100%);
+  border-radius: 0 3px 3px 0;
+}
+
+.fact-item blockquote {
+  font-style: italic;
+  color: #444444;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.fact-item blockquote::before {
+  content: '"';
+  position: absolute;
+  left: -0.5rem;
+  top: -0.5rem;
+  font-size: 3rem;
+  color: #0081C8;
+  font-family: serif;
+  opacity: 0.3;
+}
+
+.fact-source {
+  font-size: 0.95rem;
+  color: #666666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .olympic-facts-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .facts-section h2 {
+    font-size: 1.8rem;
+    padding: 1rem 1.5rem 0 1.5rem;
+  }
+  
+  .fact-item {
+    margin: 0 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .fact-item blockquote {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .facts-section h2 {
+    font-size: 1.5rem;
+    padding: 1rem 1rem 0 1rem;
+  }
+  
+  .fact-item {
+    margin: 0 1rem 1rem 1rem;
+    padding: 1rem;
+  }
+}

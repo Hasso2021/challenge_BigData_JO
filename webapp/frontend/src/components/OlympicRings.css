@@ -1,0 +1,132 @@
+.olympic-rings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0;
+  position: relative;
+}
+
+.rings-top {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: -8px;
+  z-index: 2;
+}
+
+.rings-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  z-index: 1;
+}
+
+.olympic-ring {
+  width: 80px;
+  height: 80px;
+  border: 6px solid;
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.olympic-ring.blue { 
+  border-color: #0081C8; 
+  background: linear-gradient(135deg, rgba(0,129,200,0.1), rgba(0,129,200,0.05));
+}
+
+.olympic-ring.yellow { 
+  border-color: #FCB131; 
+  background: linear-gradient(135deg, rgba(252,177,49,0.1), rgba(252,177,49,0.05));
+}
+
+.olympic-ring.black { 
+  border-color: #000000; 
+  background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.05));
+}
+
+.olympic-ring.green { 
+  border-color: #00A651; 
+  background: linear-gradient(135deg, rgba(0,166,81,0.1), rgba(0,166,81,0.05));
+}
+
+.olympic-ring.red { 
+  border-color: #EE334E; 
+  background: linear-gradient(135deg, rgba(238,51,78,0.1), rgba(238,51,78,0.05));
+}
+
+.olympic-ring::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.olympic-ring:hover::before {
+  opacity: 1;
+}
+
+.olympic-ring:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Animation pour les anneaux */
+@keyframes ringPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(1.05); 
+    opacity: 1; 
+  }
+}
+
+.olympic-ring:active {
+  animation: ringPulse 0.6s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .olympic-ring {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+  }
+  
+  .rings-top,
+  .rings-bottom {
+    gap: 10px;
+  }
+  
+  .rings-top {
+    margin-bottom: -6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .olympic-ring {
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
+  }
+  
+  .rings-top,
+  .rings-bottom {
+    gap: 8px;
+  }
+  
+  .rings-top {
+    margin-bottom: -4px;
+  }
+}
