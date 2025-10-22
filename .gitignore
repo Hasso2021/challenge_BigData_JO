@@ -90,3 +90,5 @@ ehthumbs.db
 # -------- LOCAL DEV --------
 tmp/
 temp/
+
+*__pycache__/
