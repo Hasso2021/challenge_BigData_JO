@@ -1,0 +1,6738 @@
+.olympic-facts-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.olympic-facts-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-header {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.header-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+}
+
+.home-nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.home-nav-button:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+}
+
+.nav-text {
+  font-weight: 600;
+}
+
+.olympic-rings-nav {
+  opacity: 0.7;
+  scale: 0.8;
+  transition: all 0.3s ease;
+}
+
+.olympic-rings-nav:hover {
+  opacity: 1;
+  scale: 0.9;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 2rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.facts-content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Styles pour la navigation entre sections */
+.section-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0 3rem 0;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px solid #dee2e6;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+  min-width: 200px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #0081C8;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.nav-button.active {
+  background: linear-gradient(135deg, #0081C8 0%, #00A8CC 100%);
+  border-color: #0081C8;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0,129,200,0.3);
+  transform: translateY(-2px);
+}
+
+.nav-button.active:hover {
+  background: linear-gradient(135deg, #0066A0 0%, #0088B8 100%);
+  box-shadow: 0 6px 20px rgba(0,129,200,0.4);
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-text {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Responsive design pour la navigation */
+@media (max-width: 768px) {
+  .section-navigation {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1.5rem 0 2rem 0;
+  }
+  
+  .nav-button {
+    min-width: auto;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .nav-icon {
+    font-size: 1.25rem;
+  }
+  
+  .nav-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-button {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  
+  .nav-text {
+    font-size: 0.85rem;
+  }
+}
+
+/* Styles pour les nouvelles sections */
+.section-container {
+  margin-bottom: 4rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  border: 1px solid #e8e8e8;
+}
+
+.section-header {
+  background: linear-gradient(135deg, #0081C8 0%, #00A8CC 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.section-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Styles pour la section Questions ouvertes */
+.open-questions-placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.placeholder-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.placeholder-content h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.placeholder-content p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.coming-soon-features {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  width: 2.5rem;
+  text-align: center;
+}
+
+.feature-item span:last-child {
+  font-weight: 500;
+  color: #495057;
+}
+
+/* Responsive design pour les nouvelles sections */
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .section-header p {
+    font-size: 1rem;
+  }
+  
+  .placeholder-content h3 {
+    font-size: 1.5rem;
+  }
+  
+  .placeholder-content p {
+    font-size: 1rem;
+  }
+  
+  .coming-soon-features {
+    gap: 0.75rem;
+  }
+  
+  .feature-item {
+    padding: 0.75rem;
+  }
+}
+
+.facts-section {
+  margin-bottom: 4rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 250, 252, 0.5) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+.facts-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.facts-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+  border-radius: 2px;
+}
+
+.fact-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.8) 100%);
+  border-left: 5px solid #3b82f6;
+  padding: 2rem;
+  margin: 0 0 2rem 0;
+  border-radius: 0 16px 16px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.fact-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+  border-left-color: #10b981;
+}
+
+.fact-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(16, 185, 129, 0.02) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.fact-item blockquote {
+  font-style: italic;
+  color: #475569;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  font-size: 1.1rem;
+  font-weight: 500;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.fact-item blockquote::before {
+  content: '"';
+  position: absolute;
+  left: -0.5rem;
+  top: -0.5rem;
+  font-size: 3rem;
+  color: #3b82f6;
+  font-family: serif;
+  opacity: 0.3;
+}
+
+.fact-source {
+  font-size: 0.95rem;
+  color: #666666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 3rem 1.5rem;
+  }
+  
+  .facts-content {
+    padding: 2rem 1rem;
+  }
+  
+  .section-navigation {
+    padding: 0 1rem;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .facts-section h2 {
+    font-size: 1.8rem;
+    padding: 1rem 1.5rem 0 1.5rem;
+  }
+  
+  .fact-item {
+    margin: 0 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .fact-item blockquote {
+    font-size: 1rem;
+  }
+}
+
+/* Styles pour la section de réponse basée sur les données */
+.data-answer {
+  background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+  border: 2px solid #0081C8;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 129, 200, 0.1);
+}
+
+.data-answer h3 {
+  color: #0081C8;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 2rem;
+}
+
+.error {
+  background-color: #ffe6e6;
+  color: #d63031;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #d63031;
+  margin: 1rem 0;
+}
+
+.data-analysis {
+  margin-top: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #0081C8;
+}
+
+.stat-card h4 {
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0081C8;
+  margin: 0.5rem 0;
+}
+
+.games-list {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.games-list h4 {
+  color: #0081C8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.games-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.games-list li {
+  background-color: #ffffff;
+  border-left: 4px solid #FCB131;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.games-list li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.games-list li strong {
+  color: #0081C8;
+  font-size: 1.1rem;
+}
+
+.conclusion {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.conclusion p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.conclusion strong {
+  color: #28a745;
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .facts-section h2 {
+    font-size: 1.5rem;
+    padding: 1rem 1rem 0 1rem;
+  }
+  
+  .fact-item {
+    margin: 0 1rem 1rem 1rem;
+    padding: 1rem;
+  }
+
+  .data-answer {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+/* Styles pour la nouvelle section de classement */
+.ranking-analysis {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 129, 200, 0.1);
+}
+
+.question-answer h3 {
+  color: #0081C8;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Position de la France */
+.france-position {
+  margin-bottom: 2rem;
+}
+
+.position-card {
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  border: 3px solid #0081C8;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 129, 200, 0.15);
+  transition: all 0.3s ease;
+}
+
+.position-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 129, 200, 0.2);
+}
+
+.position-card h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.position-number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #FCB131;
+  margin: 1rem 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.position-details p {
+  font-size: 1.1rem;
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.france-games {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.france-games h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.france-games ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.france-games li {
+  background-color: #ffffff;
+  border-left: 4px solid #FCB131;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.game-year {
+  background-color: #0081C8;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.game-city {
+  font-weight: 600;
+  color: #495057;
+  flex: 1;
+}
+
+.game-season {
+  background-color: #FCB131;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Top ranking */
+.top-ranking {
+  margin-bottom: 2rem;
+}
+
+.top-ranking h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.ranking-table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 2px solid #e9ecef;
+}
+
+.ranking-header {
+  background: linear-gradient(135deg, #0081C8 0%, #0066a1 100%);
+  color: white;
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  padding: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.ranking-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+  align-items: center;
+}
+
+.ranking-row:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.01);
+}
+
+.ranking-row.france-row {
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  border: 2px solid #0081C8;
+  border-radius: 8px;
+  margin: 0.2rem;
+  box-shadow: 0 2px 8px rgba(0, 129, 200, 0.2);
+}
+
+.rank {
+  font-weight: 700;
+  color: #0081C8;
+  font-size: 1.1rem;
+}
+
+.country {
+  font-weight: 600;
+  color: #495057;
+  font-size: 1rem;
+}
+
+.count {
+  font-weight: 700;
+  color: #FCB131;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Conclusion */
+.conclusion {
+  margin-top: 2rem;
+}
+
+.conclusion-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 2px solid #e9ecef;
+}
+
+.conclusion-card h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.conclusion-content {
+  text-align: center;
+}
+
+.correct-answer {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #155724;
+}
+
+.incorrect-answer {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #721c24;
+}
+
+.correct-answer p,
+.incorrect-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.correct-answer strong,
+.incorrect-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la nouvelle section */
+@media (max-width: 768px) {
+  .ranking-analysis {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .position-number {
+    font-size: 3rem;
+  }
+  
+  .ranking-header,
+  .ranking-row {
+    grid-template-columns: 60px 1fr 80px;
+    padding: 0.8rem;
+  }
+  
+  .france-games li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking-analysis {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+  
+  .position-number {
+    font-size: 2.5rem;
+  }
+  
+  .ranking-header,
+  .ranking-row {
+    grid-template-columns: 50px 1fr 60px;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+  
+  .conclusion-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la liste de questions */
+.questions-list {
+  margin-bottom: 3rem;
+}
+
+.questions-list h2 {
+  color: #0081C8;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+  border-bottom: 3px solid #0081C8;
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.questions-list h2::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #FCB131;
+}
+
+.questions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.question-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.question-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  border-color: #0081C8;
+}
+
+.question-card.active {
+  border-color: #0081C8;
+  box-shadow: 0 6px 24px rgba(0, 129, 200, 0.2);
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  gap: 1.5rem;
+}
+
+.question-icon {
+  font-size: 2.5rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0081C8 0%, #FCB131 100%);
+  border-radius: 50%;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 129, 200, 0.3);
+  flex-shrink: 0;
+}
+
+.question-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.question-info h3 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.question-info p {
+  color: #666666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.question-category {
+  display: inline-block;
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.question-arrow {
+  font-size: 1.2rem;
+  color: #0081C8;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.question-card.active .question-arrow {
+  transform: rotate(180deg);
+}
+
+.question-answer {
+  border-top: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-content {
+  padding: 2rem;
+}
+
+.question-content h3 {
+  color: #0081C8;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Responsive pour la liste de questions */
+@media (max-width: 768px) {
+  .questions-list h2 {
+    font-size: 1.8rem;
+  }
+  
+  .question-header {
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
+  
+  .question-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .question-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .question-info p {
+    font-size: 0.9rem;
+  }
+  
+  .question-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .questions-list h2 {
+    font-size: 1.5rem;
+  }
+  
+  .question-header {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+  
+  .question-icon {
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .question-info h3 {
+    font-size: 1rem;
+  }
+  
+  .question-info p {
+    font-size: 0.85rem;
+  }
+  
+  .question-category {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+  }
+  
+  .question-content {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 3 - JO d'hiver */
+.winter-games-analysis {
+  margin-top: 1rem;
+}
+
+.first-winter-games {
+  margin-bottom: 2rem;
+}
+
+.historical-card {
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  border: 3px solid #0081C8;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 129, 200, 0.15);
+}
+
+.historical-card h4 {
+  color: #0081C8;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.historical-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.first-games-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+}
+
+.game-year-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(252, 177, 49, 0.3);
+  flex-shrink: 0;
+}
+
+.game-details {
+  flex: 1;
+}
+
+.game-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.game-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.verification {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+}
+
+.verification h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.verification-result {
+  margin-top: 1rem;
+}
+
+.correct-verification {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #155724;
+}
+
+.incorrect-verification {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #721c24;
+}
+
+.correct-verification p,
+.incorrect-verification p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Historique des JO d'hiver */
+.winter-games-history {
+  margin-bottom: 2rem;
+}
+
+.winter-games-history h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.history-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.timeline-item.highlight {
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  border-color: #0081C8;
+  box-shadow: 0 4px 16px rgba(0, 129, 200, 0.2);
+}
+
+.timeline-year {
+  background: linear-gradient(135deg, #0081C8 0%, #0066a1 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.8rem 1.2rem;
+  border-radius: 20px;
+  min-width: 80px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 129, 200, 0.3);
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-content h6 {
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.timeline-content p {
+  color: #666666;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.first-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Détails sur Chamonix */
+.chamonix-details {
+  margin-bottom: 2rem;
+}
+
+.chamonix-details h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.chamonix-info {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #0081C8;
+}
+
+.info-card h5 {
+  color: #0081C8;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.info-card p {
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Conclusion des JO d'hiver */
+.winter-games-conclusion {
+  margin-top: 2rem;
+}
+
+.winter-games-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.winter-games-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.winter-games-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.winter-games-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.winter-games-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 3 */
+@media (max-width: 768px) {
+  .historical-card {
+    padding: 1.5rem;
+  }
+  
+  .first-games-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .game-year-badge {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .timeline-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .timeline-year {
+    min-width: 60px;
+    font-size: 1rem;
+    padding: 0.6rem 1rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .historical-card {
+    padding: 1rem;
+  }
+  
+  .game-year-badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .timeline {
+    gap: 0.8rem;
+  }
+  
+  .timeline-item {
+    padding: 0.8rem;
+  }
+  
+  .info-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 4 - Participation des femmes */
+.women-participation-analysis {
+  margin-top: 1rem;
+}
+
+.paris-1900-women {
+  margin-bottom: 2rem;
+}
+
+.paris-1900-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.games-year-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(252, 177, 49, 0.3);
+  flex-shrink: 0;
+}
+
+.games-details {
+  flex: 1;
+}
+
+.games-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.games-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.women-participation-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.women-participation-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.fact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.fact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #0081C8;
+}
+
+.fact-card h6 {
+  color: #0081C8;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.fact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Historique de la participation féminine */
+.women-history {
+  margin-bottom: 2rem;
+}
+
+.women-history h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.milestone-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sports féminins en 1900 */
+.women-sports-1900 {
+  margin-bottom: 2rem;
+}
+
+.women-sports-1900 h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.sport-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.sport-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #0081C8;
+}
+
+.sport-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.sport-card h5 {
+  color: #1a1a1a;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sport-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.sport-card strong {
+  color: #0081C8;
+  font-weight: 600;
+}
+
+/* Impact historique */
+.historical-impact {
+  margin-bottom: 2rem;
+}
+
+.historical-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #FCB131;
+}
+
+.impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion de la participation féminine */
+.women-participation-conclusion {
+  margin-top: 2rem;
+}
+
+.women-participation-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.women-participation-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.women-participation-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.women-participation-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.women-participation-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 4 */
+@media (max-width: 768px) {
+  .paris-1900-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .games-year-badge {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .facts-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .sports-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .games-year-badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .fact-card {
+    padding: 0.8rem;
+  }
+  
+  .sport-card {
+    padding: 1rem;
+  }
+  
+  .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 5 - Athlètes double saison */
+.dual-season-analysis {
+  margin-top: 1rem;
+}
+
+.dual-season-athletes {
+  margin-bottom: 2rem;
+}
+
+.dual-season-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.achievement-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(252, 177, 49, 0.3);
+  flex-shrink: 0;
+}
+
+.achievement-details {
+  flex: 1;
+}
+
+.achievement-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.dual-season-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.dual-season-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Les 4 athlètes double saison */
+.four-athletes {
+  margin-bottom: 2rem;
+}
+
+.four-athletes h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.athletes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.athlete-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.athlete-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #0081C8;
+}
+
+.athlete-card.highlight {
+  background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+  border-color: #FCB131;
+  box-shadow: 0 6px 24px rgba(252, 177, 49, 0.2);
+}
+
+.athlete-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.athlete-card h5 {
+  color: #1a1a1a;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.athlete-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.athlete-card strong {
+  color: #0081C8;
+  font-weight: 600;
+}
+
+.unique-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Performance de Christa */
+.christa-performance {
+  margin-bottom: 2rem;
+}
+
+.christa-performance h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.performance-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.winter-badge {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summer-badge {
+  background: linear-gradient(135deg, #fd7e14 0%, #e55a00 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Impact historique */
+.dual-season-impact {
+  margin-bottom: 2rem;
+}
+
+.dual-season-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.dual-season-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dual-season-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.dual-season-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.dual-season-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #FCB131;
+}
+
+.dual-season-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dual-season-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion des athlètes double saison */
+.dual-season-conclusion {
+  margin-top: 2rem;
+}
+
+.dual-season-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.dual-season-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.dual-season-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.dual-season-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.dual-season-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 5 */
+@media (max-width: 768px) {
+  .dual-season-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .achievement-badge {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .athletes-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .dual-season-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .achievement-badge {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .athlete-card {
+    padding: 1rem;
+  }
+  
+  .dual-season-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 6 - Évolution du calendrier olympique */
+.calendar-evolution-analysis {
+  margin-top: 1rem;
+}
+
+.calendar-evolution {
+  margin-bottom: 2rem;
+}
+
+.calendar-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(252, 177, 49, 0.3);
+  flex-shrink: 0;
+}
+
+.calendar-details {
+  flex: 1;
+}
+
+.calendar-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.calendar-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Timeline de l'évolution */
+.calendar-timeline {
+  margin-bottom: 2rem;
+}
+
+.calendar-timeline h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.timeline-evolution {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.timeline-item.transition {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffffff 100%);
+  border-color: #ffc107;
+  box-shadow: 0 4px 16px rgba(255, 193, 7, 0.2);
+}
+
+.period-badge {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.change-badge {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  color: #212529;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.new-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Comparaison des systèmes */
+.system-comparison {
+  margin-bottom: 2rem;
+}
+
+.system-comparison h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.system-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.system-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.system-card.old-system {
+  border-color: #6c757d;
+}
+
+.system-card.new-system {
+  border-color: #28a745;
+}
+
+.system-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.system-card h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.system-details {
+  text-align: left;
+}
+
+.system-details p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+.system-details strong {
+  color: #0081C8;
+  font-weight: 600;
+}
+
+/* Exemples concrets */
+.concrete-examples {
+  margin-bottom: 2rem;
+}
+
+.concrete-examples h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.example-period {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.example-period h5 {
+  color: #0081C8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.examples-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.example-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+}
+
+.example-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.example-item .year {
+  background: linear-gradient(135deg, #0081C8 0%, #0066a1 100%);
+  color: white;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.example-item .events {
+  color: #495057;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+/* Impact de l'évolution */
+.evolution-impact {
+  margin-bottom: 2rem;
+}
+
+.evolution-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.evolution-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.evolution-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.evolution-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.evolution-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #FCB131;
+}
+
+.evolution-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.evolution-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion de l'évolution du calendrier */
+.calendar-evolution-conclusion {
+  margin-top: 2rem;
+}
+
+.calendar-evolution-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.calendar-evolution-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.calendar-evolution-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.calendar-evolution-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.calendar-evolution-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 6 */
+@media (max-width: 768px) {
+  .calendar-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .calendar-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .evolution-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .system-card {
+    padding: 1.5rem;
+  }
+  
+  .example-period {
+    padding: 1rem;
+  }
+  
+  .evolution-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 7 - Johnny Weissmuller / Tarzan */
+.weissmuller-analysis {
+  margin-top: 1rem;
+}
+
+.weissmuller-profile {
+  margin-bottom: 2rem;
+}
+
+.weissmuller-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.athlete-badge {
+  background: linear-gradient(135deg, #FCB131 0%, #ffc947 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(252, 177, 49, 0.3);
+  flex-shrink: 0;
+}
+
+.athlete-details {
+  flex: 1;
+}
+
+.athlete-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.athlete-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.weissmuller-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.weissmuller-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Médailles olympiques */
+.olympic-medals {
+  margin-bottom: 2rem;
+}
+
+.olympic-medals h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.medals-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.medals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.medal-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.medal-item.gold {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border: 2px solid #ffc107;
+}
+
+.medal-item.bronze {
+  background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
+  border: 2px solid #cd7f32;
+}
+
+.medal-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.medal-icon {
+  font-size: 1.5rem;
+}
+
+.medal-event {
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.games-badge {
+  background: linear-gradient(135deg, #0081C8 0%, #0066a1 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Carrière cinématographique */
+.cinema-career {
+  margin-bottom: 2rem;
+}
+
+.cinema-career h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.cinema-details {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cinema-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.cinema-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  flex-shrink: 0;
+}
+
+.cinema-details-content {
+  flex: 1;
+}
+
+.cinema-details-content h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cinema-details-content p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.films-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.film-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.film-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #28a745;
+}
+
+.film-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.film-card h6 {
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.film-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Double carrière unique */
+.unique-career {
+  margin-bottom: 2rem;
+}
+
+.unique-career h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.career-comparison {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.career-phase {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.career-phase:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.career-phase h5 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.phase-details p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+}
+
+.phase-details strong {
+  color: #0081C8;
+  font-weight: 600;
+}
+
+/* Impact de Weissmuller */
+.weissmuller-impact {
+  margin-bottom: 2rem;
+}
+
+.weissmuller-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.weissmuller-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.weissmuller-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.weissmuller-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.weissmuller-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #FCB131;
+}
+
+.weissmuller-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.weissmuller-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion de Weissmuller */
+.weissmuller-conclusion {
+  margin-top: 2rem;
+}
+
+.weissmuller-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.weissmuller-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.weissmuller-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.weissmuller-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.weissmuller-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 7 */
+@media (max-width: 768px) {
+  .weissmuller-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .athlete-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .cinema-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .cinema-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .films-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .career-comparison {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .weissmuller-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .athlete-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .cinema-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .film-card {
+    padding: 1rem;
+  }
+  
+  .career-phase {
+    padding: 1.5rem;
+  }
+  
+  .weissmuller-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 8 - Londres 2012 participation féminine */
+.london-2012-analysis {
+  margin-top: 1rem;
+}
+
+.london-2012-milestone {
+  margin-bottom: 2rem;
+}
+
+.milestone-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.milestone-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  flex-shrink: 0;
+}
+
+.milestone-details {
+  flex: 1;
+}
+
+.milestone-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.milestone-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.milestone-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Pays pionniers */
+.pioneer-countries {
+  margin-bottom: 2rem;
+}
+
+.pioneer-countries h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.countries-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.pioneer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.pioneer-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+}
+
+.pioneer-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.country-flag {
+  font-size: 1.5rem;
+}
+
+.country-name {
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.pioneer-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.revolution-badge {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Statistiques de participation */
+.participation-stats {
+  margin-bottom: 2rem;
+}
+
+.participation-stats h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #28a745;
+}
+
+.stat-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.stat-value {
+  color: #28a745;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Évolution historique */
+.historical-evolution {
+  margin-bottom: 2rem;
+}
+
+.historical-evolution h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.evolution-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Défis et inégalités persistantes */
+.remaining-challenges {
+  margin-bottom: 2rem;
+}
+
+.remaining-challenges h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.challenge-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.challenge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #dc3545;
+}
+
+.challenge-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.challenge-card h5 {
+  color: #dc3545;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.challenge-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Impact de Londres 2012 */
+.london-2012-impact {
+  margin-bottom: 2rem;
+}
+
+.london-2012-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.london-2012-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.london-2012-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.london-2012-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.london-2012-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #28a745;
+}
+
+.london-2012-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.london-2012-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion de Londres 2012 */
+.london-2012-conclusion {
+  margin-top: 2rem;
+}
+
+.london-2012-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.london-2012-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.london-2012-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.london-2012-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.london-2012-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 8 */
+@media (max-width: 768px) {
+  .milestone-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .milestone-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .challenges-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .london-2012-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .milestone-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
+  .challenge-card {
+    padding: 1rem;
+  }
+  
+  .london-2012-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 9 - Sports olympiques disparus */
+.discontinued-sports-analysis {
+  margin-top: 1rem;
+}
+
+.discontinued-sports-overview {
+  margin-bottom: 2rem;
+}
+
+.sports-overview-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.overview-badge {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+  flex-shrink: 0;
+}
+
+.overview-details {
+  flex: 1;
+}
+
+.overview-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.overview-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.sports-overview-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.sports-overview-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Sports disparus détaillés */
+.discontinued-sports-details {
+  margin-bottom: 2rem;
+}
+
+.discontinued-sports-details h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sport-card.discontinued {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 2px solid #dc3545;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.sport-card.discontinued:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #c82333;
+}
+
+.sport-card.discontinued .sport-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.sport-card.discontinued h5 {
+  color: #dc3545;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.sport-card.discontinued p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.discontinued-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Tir au pigeon - Cas spécial */
+.pigeon-shooting-special {
+  margin-bottom: 2rem;
+}
+
+.pigeon-shooting-special h4 {
+  color: #dc3545;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pigeon-shooting-details {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #dc3545;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.1);
+}
+
+.special-event-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.event-badge {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  flex-shrink: 0;
+}
+
+.event-details {
+  flex: 1;
+}
+
+.event-details h5 {
+  color: #dc3545;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.event-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.pigeon-shooting-facts {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+}
+
+.pigeon-shooting-facts h5 {
+  color: #dc3545;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Évolution des valeurs */
+.values-evolution {
+  margin-bottom: 2rem;
+}
+
+.values-evolution h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.evolution-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.modern-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Raisons de suppression */
+.suppression-reasons {
+  margin-bottom: 2rem;
+}
+
+.suppression-reasons h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.reason-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.reason-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #6c757d;
+}
+
+.reason-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.reason-card h5 {
+  color: #6c757d;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.reason-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Impact des sports disparus */
+.discontinued-sports-impact {
+  margin-bottom: 2rem;
+}
+
+.discontinued-sports-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.discontinued-sports-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.discontinued-sports-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.discontinued-sports-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.discontinued-sports-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #6c757d;
+}
+
+.discontinued-sports-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.discontinued-sports-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion des sports disparus */
+.discontinued-sports-conclusion {
+  margin-top: 2rem;
+}
+
+.discontinued-sports-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.discontinued-sports-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.discontinued-sports-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.discontinued-sports-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.discontinued-sports-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 9 */
+@media (max-width: 768px) {
+  .sports-overview-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .overview-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .special-event-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .event-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .reasons-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .discontinued-sports-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .event-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .reason-card {
+    padding: 1rem;
+  }
+  
+  .discontinued-sports-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 10 - Rio 2016 Amérique du Sud */
+.rio-2016-analysis {
+  margin-top: 1rem;
+}
+
+.rio-2016-milestone {
+  margin-bottom: 2rem;
+}
+
+.milestone-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.milestone-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  flex-shrink: 0;
+}
+
+.milestone-details {
+  flex: 1;
+}
+
+.milestone-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.milestone-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.milestone-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Historique géographique */
+.geographical-history {
+  margin-bottom: 2rem;
+}
+
+.geographical-history h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.continents-timeline {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.first-badge {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Nouveautés de Rio 2016 */
+.rio-2016-innovations {
+  margin-bottom: 2rem;
+}
+
+.rio-2016-innovations h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.innovations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.innovation-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.innovation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #28a745;
+}
+
+.innovation-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.innovation-card h5 {
+  color: #0081C8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.innovation-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.return-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.new-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.geography-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.sports-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(111, 66, 193, 0.3);
+}
+
+/* Statistiques de Rio 2016 */
+.rio-2016-stats {
+  margin-bottom: 2rem;
+}
+
+.rio-2016-stats h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #28a745;
+}
+
+.stat-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.stat-value {
+  color: #28a745;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Tableau des médailles */
+.medals-table {
+  margin-bottom: 2rem;
+}
+
+.medals-table h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.medals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.medal-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.medal-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.medal-card.gold {
+  border-color: #ffd700;
+  background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+}
+
+.medal-card.silver {
+  border-color: #c0c0c0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.medal-card.bronze {
+  border-color: #cd7f32;
+  background: linear-gradient(135deg, #fdf5e6 0%, #ffffff 100%);
+}
+
+.medal-rank {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  border-radius: 50%;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.medal-country {
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.medal-count {
+  color: #28a745;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-right: 1rem;
+}
+
+.medal-breakdown {
+  color: #495057;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+/* Impact de Rio 2016 */
+.rio-2016-impact {
+  margin-bottom: 2rem;
+}
+
+.rio-2016-impact h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.rio-2016-impact .impact-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rio-2016-impact .impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.rio-2016-impact .impact-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.rio-2016-impact .impact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #28a745;
+}
+
+.rio-2016-impact .impact-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.rio-2016-impact .impact-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion de Rio 2016 */
+.rio-2016-conclusion {
+  margin-top: 2rem;
+}
+
+.rio-2016-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(40, 167, 69, 0.2);
+}
+
+.rio-2016-conclusion .conclusion-card h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.rio-2016-conclusion .correct-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #155724;
+}
+
+.rio-2016-conclusion .correct-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.rio-2016-conclusion .correct-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 10 */
+@media (max-width: 768px) {
+  .milestone-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .milestone-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .innovations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .medals-grid {
+    gap: 0.5rem;
+  }
+  
+  .medal-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .rio-2016-impact .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .milestone-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .innovation-card {
+    padding: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
+  .medal-card {
+    padding: 0.8rem;
+  }
+  
+  .rio-2016-impact .impact-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Question 11 - Statistiques de Rio 2016 */
+.rio-2016-stats-analysis {
+  margin-top: 1rem;
+}
+
+.stats-comparison {
+  margin-bottom: 2rem;
+}
+
+.comparison-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.comparison-badge {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+  flex-shrink: 0;
+}
+
+.comparison-details {
+  flex: 1;
+}
+
+.comparison-details h5 {
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.comparison-details p {
+  color: #666666;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.stats-comparison-facts {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.stats-comparison-facts h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.comparison-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.comparison-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #6c757d;
+}
+
+.comparison-card h6 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.stat-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.stat-claimed, .stat-official {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.stat-claimed {
+  border-left: 4px solid #ffc107;
+}
+
+.stat-official {
+  border-left: 4px solid #28a745;
+}
+
+.stat-label {
+  color: #495057;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.stat-value {
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.stat-difference {
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+}
+
+.difference {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.difference.correct {
+  color: #28a745;
+  font-weight: 700;
+}
+
+.partial-verification {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #856404;
+}
+
+.partial-verification p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.partial-verification strong {
+  font-size: 1.2rem;
+}
+
+/* Statistiques officielles détaillées */
+.official-stats-details {
+  margin-bottom: 2rem;
+}
+
+.official-stats-details h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.official-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.official-stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.official-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #28a745;
+}
+
+.official-stat-card .stat-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.official-stat-card h5 {
+  color: #0081C8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.official-stat-card .stat-value {
+  color: #28a745;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.official-stat-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.stat-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.breakdown-item {
+  color: #6c757d;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+/* Durée et calendrier */
+.duration-calendar {
+  margin-bottom: 2rem;
+}
+
+.duration-calendar h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.calendar-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.calendar-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.calendar-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border-color: #17a2b8;
+}
+
+.calendar-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-card h5 {
+  color: #0081C8;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.duration-value, .venues-value {
+  color: #17a2b8;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.duration-breakdown, .venues-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Sports et disciplines */
+.sports-disciplines {
+  margin-bottom: 2rem;
+}
+
+.sports-disciplines h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sports-breakdown {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.sports-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.sport-category {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.sport-category:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #28a745;
+}
+
+.sport-category h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sport-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sport-item {
+  color: #495057;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.sport-item:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+  border-color: #28a745;
+}
+
+/* Impact et héritage */
+.rio-2016-legacy {
+  margin-bottom: 2rem;
+}
+
+.rio-2016-legacy h4 {
+  color: #0081C8;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.legacy-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.legacy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.legacy-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.legacy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-color: #28a745;
+}
+
+.legacy-card h5 {
+  color: #0081C8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.legacy-card p {
+  color: #495057;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Conclusion des statistiques de Rio 2016 */
+.rio-2016-stats-conclusion {
+  margin-top: 2rem;
+}
+
+.rio-2016-stats-conclusion .conclusion-card {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+  border: 2px solid #ffc107;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(255, 193, 7, 0.2);
+}
+
+.rio-2016-stats-conclusion .conclusion-card h4 {
+  color: #856404;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.rio-2016-stats-conclusion .partial-answer {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #856404;
+}
+
+.rio-2016-stats-conclusion .partial-answer p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.rio-2016-stats-conclusion .partial-answer strong {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour la Question 11 */
+@media (max-width: 768px) {
+  .comparison-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .comparison-badge {
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .official-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .calendar-details {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .sports-categories {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .legacy-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-badge {
+    min-width: 80px;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+  
+  .comparison-card {
+    padding: 1rem;
+  }
+  
+  .official-stat-card {
+    padding: 1.5rem;
+  }
+  
+  .calendar-card {
+    padding: 1.5rem;
+  }
+  
+  .sport-category {
+    padding: 1rem;
+  }
+  
+  .legacy-card {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la section Questions ouvertes - Médailles de la France */
+.open-question-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.open-question-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.question-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.question-header h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.question-header p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+/* Styles pour l'analyse des médailles */
+.medals-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.medals-summary h4,
+.medals-breakdown h4,
+.medals-conclusion h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.medals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.medal-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.medal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #28a745);
+}
+
+.medal-card.total::before {
+  background: linear-gradient(90deg, #ffc107, #fd7e14, #dc3545);
+}
+
+.medal-card.gold::before {
+  background: linear-gradient(90deg, #ffc107, #ffd700);
+}
+
+.medal-card.silver::before {
+  background: linear-gradient(90deg, #c0c0c0, #e9ecef);
+}
+
+.medal-card.bronze::before {
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+}
+
+.medal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.medal-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.medal-count {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.medal-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Styles pour la répartition des médailles */
+.breakdown-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.stat-item:nth-child(1) {
+  border-left-color: #ffc107;
+}
+
+.stat-item:nth-child(2) {
+  border-left-color: #c0c0c0;
+}
+
+.stat-item:nth-child(3) {
+  border-left-color: #cd7f32;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1.1rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.stat-percentage {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 1rem;
+  background: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* Styles pour la conclusion */
+.medals-conclusion {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.medals-conclusion h4 {
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+.medals-conclusion p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.medals-conclusion ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.medals-conclusion li {
+  padding: 0.5rem 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+  border-bottom: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.medals-conclusion li:last-child {
+  border-bottom: none;
+}
+
+.medals-conclusion strong {
+  color: #1976d2;
+  font-weight: 700;
+}
+
+/* Styles pour les états de chargement et d'erreur */
+.loading-container,
+.error-container,
+.no-data {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container p,
+.no-data p {
+  font-size: 1.1rem;
+  color: #dc3545;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Responsive pour la section des médailles */
+@media (max-width: 768px) {
+  .medals-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+  
+  .medal-card {
+    padding: 1rem;
+  }
+  
+  .medal-count {
+    font-size: 2rem;
+  }
+  
+  .medal-icon {
+    font-size: 2rem;
+  }
+  
+  .stat-item {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .open-question-card {
+    padding: 1.5rem;
+  }
+  
+  .question-header h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .medals-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .medal-card {
+    padding: 1rem;
+  }
+  
+  .medal-count {
+    font-size: 1.8rem;
+  }
+  
+  .medal-icon {
+    font-size: 1.8rem;
+  }
+  
+  .open-question-card {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .question-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+  
+  .question-header h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Styles pour les graphiques de médailles */
+.medal-charts-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.chart-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.chart-header h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.chart-header p {
+  font-size: 1rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.chart-wrapper {
+  height: 300px;
+  position: relative;
+}
+
+.charts-summary {
+  margin-top: 1.5rem;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.summary-card h4 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+/* Section du bouton de graphiques */
+.chart-toggle-section {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  border: 2px solid #dee2e6;
+}
+
+/* Bouton pour afficher/masquer les graphiques */
+.chart-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.chart-toggle-button:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.chart-toggle-button:active {
+  transform: translateY(0);
+}
+
+.chart-toggle-button .icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive pour les graphiques */
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .chart-wrapper {
+    height: 250px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .chart-card {
+    padding: 1rem;
+  }
+  
+  .chart-header h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-wrapper {
+    height: 200px;
+  }
+  
+  .chart-card {
+    padding: 0.75rem;
+  }
+  
+  .chart-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .chart-header h4 {
+    font-size: 1.1rem;
+  }
+  
+  .chart-header p {
+    font-size: 0.9rem;
+  }
+  
+  .stat-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}
+
+/* Styles pour la Q2 - Analyse des succès par édition */
+.question-header.clickable {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.question-header.clickable:hover {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: -1rem;
+}
+
+.question-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.question-toggle:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.toggle-icon {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.toggle-text {
+  font-size: 0.9rem;
+}
+
+.success-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.success-summary h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.performance-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.performance-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.performance-card.best {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+}
+
+.performance-card.best::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.performance-card.worst {
+  border-color: #dc3545;
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+}
+
+.performance-card.worst::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #dc3545, #e74c3c);
+}
+
+.performance-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.performance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.performance-header h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.year-badge {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.performance-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+.medal-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.medal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.medal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.medal-item.gold {
+  border-left: 4px solid #ffc107;
+}
+
+.medal-item.silver {
+  border-left: 4px solid #c0c0c0;
+}
+
+.medal-item.bronze {
+  border-left: 4px solid #cd7f32;
+}
+
+.medal-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.medal-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.medal-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.success-conclusion {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.success-conclusion h4 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.analysis-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.comparison-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.comparison-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+}
+
+.comparison-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.comparison-value {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+.historical-context {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.historical-context h5 {
+  color: #1976d2;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.historical-context p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.historical-context strong {
+  color: #1976d2;
+  font-weight: 700;
+}
+
+/* Responsive pour la Q2 */
+@media (max-width: 768px) {
+  .performance-cards {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .medal-breakdown {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .comparison-stats {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .performance-card {
+    padding: 1rem;
+  }
+  
+  .performance-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .medal-item {
+    padding: 0.75rem;
+  }
+  
+  .medal-count {
+    font-size: 1.3rem;
+  }
+  
+  .medal-icon {
+    font-size: 1.3rem;
+  }
+  
+  .performance-card {
+    padding: 0.75rem;
+  }
+  
+  .historical-context {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour la Q3 - Spécialités sportives */
+.sports-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.sports-summary h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sport-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.sport-card.rank-1 {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+}
+
+.sport-card.rank-1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffc107, #ffd700);
+}
+
+.sport-card.rank-2 {
+  border-color: #c0c0c0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.sport-card.rank-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #c0c0c0, #e9ecef);
+}
+
+.sport-card.rank-3 {
+  border-color: #cd7f32;
+  background: linear-gradient(135deg, #f5e6d3 0%, #e6d3b7 100%);
+}
+
+.sport-card.rank-3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+}
+
+.sport-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sport-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.sport-rank {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.sport-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  flex: 1;
+}
+
+.sport-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sport-total {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.total-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #007bff;
+  line-height: 1;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sport-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.sport-breakdown .medal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.sport-breakdown .medal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sport-breakdown .medal-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.sport-breakdown .medal-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.sports-analysis-details {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sports-analysis-details h4 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.analysis-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.analysis-card h5 {
+  color: #1976d2;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.dominant-sports {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dominant-sport {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+
+.dominant-sport .sport-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.sport-percentage {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stats-list .stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+
+.stats-list .stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+}
+
+.stats-list .stat-value {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1rem;
+}
+
+.sports-conclusion {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sports-conclusion h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.conclusion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.conclusion-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.conclusion-content strong {
+  color: #155724;
+  font-weight: 700;
+}
+
+/* Responsive pour la Q3 */
+@media (max-width: 768px) {
+  .sports-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .analysis-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .sport-card {
+    padding: 1rem;
+  }
+  
+  .sport-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .sport-breakdown {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sport-card {
+    padding: 0.75rem;
+  }
+  
+  .total-number {
+    font-size: 1.8rem;
+  }
+  
+  .sport-name {
+    font-size: 1.1rem;
+  }
+  
+  .analysis-card {
+    padding: 1rem;
+  }
+  
+  .sports-conclusion {
+    padding: 1rem;
+  }
+}
+
+/* Styles pour les graphiques des sports */
+.sports-charts-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  border: 2px solid #e9ecef;
+}
+
+.sports-charts-container .charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.sports-charts-container .chart-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.sports-charts-container .chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.sports-charts-container .chart-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.sports-charts-container .chart-header h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.sports-charts-container .chart-header p {
+  font-size: 1rem;
+  color: #6c757d;
+  margin: 0;
+}
+
+.sports-charts-container .chart-wrapper {
+  height: 300px;
+  position: relative;
+}
+
+.sports-charts-container .charts-summary {
+  margin-top: 1.5rem;
+}
+
+.sports-charts-container .summary-card {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sports-charts-container .summary-card h4 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sports-charts-container .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.sports-charts-container .stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border-left: 4px solid #2196f3;
+}
+
+.sports-charts-container .stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+.sports-charts-container .stat-value {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 1.1rem;
+}
+
+/* Responsive pour les graphiques des sports */
+@media (max-width: 768px) {
+  .sports-charts-container .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .sports-charts-container .chart-wrapper {
+    height: 250px;
+  }
+  
+  .sports-charts-container .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .sports-charts-container .chart-card {
+    padding: 1rem;
+  }
+  
+  .sports-charts-container .chart-header h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sports-charts-container .chart-wrapper {
+    height: 200px;
+  }
+  
+  .sports-charts-container .chart-card {
+    padding: 0.75rem;
+  }
+  
+  .sports-charts-container .chart-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .sports-charts-container .chart-header h4 {
+    font-size: 1.1rem;
+  }
+  
+  .sports-charts-container .chart-header p {
+    font-size: 0.9rem;
+  }
+  
+  .sports-charts-container .stat-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}
+
+/* Styles pour la Q4 - Sports dominants au fil des ans */
+.dominant-sports-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.dominant-sports-summary h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.dominant-sports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dominant-sport-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.dominant-sport-card.rank-1 {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+}
+
+.dominant-sport-card.rank-1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffc107, #ffd700);
+}
+
+.dominant-sport-card.rank-2 {
+  border-color: #c0c0c0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.dominant-sport-card.rank-2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #c0c0c0, #e9ecef);
+}
+
+.dominant-sport-card.rank-3 {
+  border-color: #cd7f32;
+  background: linear-gradient(135deg, #f5e6d3 0%, #e6d3b7 100%);
+}
+
+.dominant-sport-card.rank-3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #cd7f32, #8b4513);
+}
+
+.dominant-sport-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sport-rank-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.sport-info {
+  margin-top: 1rem;
+}
+
+.sport-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sport-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  border-left: 3px solid #007bff;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #007bff;
+  font-size: 1rem;
+}
+
+.medal-breakdown {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.medal-breakdown .medal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.medal-breakdown .medal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.medal-breakdown .medal-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.medal-breakdown .medal-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.evolution-analysis {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border: 2px solid #2196f3;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.evolution-analysis h4 {
+  color: #1976d2;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.decades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.decade-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.decade-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.decade-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.decade-header h5 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 0.5rem;
+}
+
+.decade-stats {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+.decade-top-sports h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+
+.top-sports-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.top-sport-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  border-left: 3px solid #2196f3;
+}
+
+.sport-rank {
+  background: #2196f3;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.top-sport-item .sport-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.sport-medals {
+  font-weight: 700;
+  color: #1976d2;
+  font-size: 0.9rem;
+}
+
+.sports-insights {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  border: 2px solid #28a745;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sports-insights h4 {
+  color: #155724;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.insight-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.insight-card h5 {
+  color: #155724;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.insight-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.insight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  border-left: 4px solid #28a745;
+}
+
+.insight-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+}
+
+.insight-value {
+  font-weight: 700;
+  color: #155724;
+  font-size: 1rem;
+}
+
+.trends-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trends-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Responsive pour la Q4 */
+@media (max-width: 768px) {
+  .dominant-sports-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .decades-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .dominant-sport-card {
+    padding: 1rem;
+  }
+  
+  .sport-stats {
+    gap: 0.5rem;
+  }
+  
+  .medal-breakdown {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dominant-sport-card {
+    padding: 0.75rem;
+  }
+  
+  .sport-name {
+    font-size: 1.2rem;
+  }
+  
+  .decade-card {
+    padding: 1rem;
+  }
+  
+  .insight-card {
+    padding: 1rem;
+  }
+  
+  .top-sport-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+  }
+}

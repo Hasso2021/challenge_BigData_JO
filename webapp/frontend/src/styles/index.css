@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ffffff;
+  color: #333333;
+  line-height: 1.6;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Styles pour les anneaux olympiques */
+.olympic-rings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.olympic-ring {
+  width: 60px;
+  height: 60px;
+  border: 4px solid;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 5px;
+  opacity: 0.8;
+}
+
+.olympic-ring.blue { border-color: #0081C8; }
+.olympic-ring.yellow { border-color: #FCB131; }
+.olympic-ring.black { border-color: #000000; }
+.olympic-ring.green { border-color: #00A651; }
+.olympic-ring.red { border-color: #EE334E; }
+
+.olympic-ring::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+/* Layout des anneaux */
+.rings-top {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: -10px;
+}
+
+.rings-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: -10px;
+}
+
+/* Animation pour les anneaux */
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+.olympic-ring:hover {
+  animation: ringPulse 1s ease-in-out;
+}
