@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import OlympicRings from '../components/OlympicRings';
 import MedalCharts from '../components/MedalCharts';
 import SportsCharts from '../components/SportsCharts';
+import GDPMedalsAnalysis from '../components/GDPMedalsAnalysis';
 import { olympicDataService } from '../services/api';
-import './OlympicFacts.css';
+import '../styles/OlympicFacts.css';
 
 const OlympicFacts = () => {
   const [hostsData, setHostsData] = useState(null);
@@ -15,7 +17,7 @@ const OlympicFacts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeQuestion, setActiveQuestion] = useState(null);
-  const [activeSection, setActiveSection] = useState('events'); // 'events' ou 'open-questions'
+  const [activeSection, setActiveSection] = useState('events'); // 'events', 'open-questions', ou 'gdp-analysis'
   const [showCharts, setShowCharts] = useState(false);
   const [showSportsCharts, setShowSportsCharts] = useState(false);
 
@@ -203,27 +205,27 @@ const OlympicFacts = () => {
             <h3>📊 Réponse basée sur les données des tables :</h3>
             {loading && <div className="loading">Chargement des données...</div>}
             {error && <div className="error">❌ {error}</div>}
-            {frenchOlympics && (
+            {rankingData?.france_data && (
               <div className="data-analysis">
                 <div className="stats-grid">
                   <div className="stat-card">
                     <h4>Total des JO organisés par la France</h4>
-                    <div className="stat-number">{frenchOlympics.total}</div>
+                    <div className="stat-number">{rankingData.france_data.total_games}</div>
                   </div>
                   <div className="stat-card">
                     <h4>Jeux d'été</h4>
-                    <div className="stat-number">{frenchOlympics.summer}</div>
+                    <div className="stat-number">{rankingData.france_data.games.filter(game => game.season === 'Summer').length}</div>
                   </div>
                   <div className="stat-card">
                     <h4>Jeux d'hiver</h4>
-                    <div className="stat-number">{frenchOlympics.winter}</div>
+                    <div className="stat-number">{rankingData.france_data.games.filter(game => game.season === 'Winter').length}</div>
                   </div>
                 </div>
                 
                 <div className="games-list">
                   <h4>🏆 Jeux Olympiques organisés par la France :</h4>
                   <ul>
-                    {frenchOlympics.games.map((game, index) => (
+                    {rankingData.france_data.games.map((game, index) => (
                       <li key={index}>
                         <strong>{game.year}</strong> - {game.city} ({game.season})
                       </li>
@@ -234,10 +236,13 @@ const OlympicFacts = () => {
                 <div className="conclusion">
                   <p>
                     <strong>Vérification :</strong> 
-                    {frenchOlympics.total === 6 ? 
-                      "✅ La donnée est correcte !" : 
-                      `❌ La donnée semble incorrecte. Nous trouvons ${frenchOlympics.total} Jeux Olympiques organisés par la France.`
+                    {rankingData.france_data.total_games === 5 ? 
+                      "✅ Les données sont correctes ! La France a organisé 5 JO dans la base de données." : 
+                      `⚠️ Les données montrent ${rankingData.france_data.total_games} Jeux Olympiques organisés par la France.`
                     }
+                  </p>
+                  <p>
+                    <strong>Note :</strong> Avec Paris 2024, la France aura organisé 6 JO au total (3 d'été + 3 d'hiver).
                   </p>
                 </div>
               </div>
@@ -2300,7 +2305,15 @@ const OlympicFacts = () => {
   return (
     <div className="olympic-facts-container">
       <div className="page-header">
-        <OlympicRings />
+        <div className="header-navigation">
+          <Link to="/" className="home-nav-button">
+            <span className="nav-icon">🏠</span>
+            <span className="nav-text">Accueil</span>
+          </Link>
+          <div className="olympic-rings-nav">
+            <OlympicRings />
+          </div>
+        </div>
         <h1 className="page-title">OLYMPIC FACTS</h1>
       </div>
 
@@ -2319,6 +2332,13 @@ const OlympicFacts = () => {
         >
           <span className="nav-icon">❓</span>
           <span className="nav-text">Questions ouvertes</span>
+        </button>
+        <button 
+          className={`nav-button ${activeSection === 'gdp-analysis' ? 'active' : ''}`}
+          onClick={() => setActiveSection('gdp-analysis')}
+        >
+          <span className="nav-icon">📊</span>
+          <span className="nav-text">Analyse PIB-Médailles</span>
         </button>
       </div>
 
@@ -2931,6 +2951,18 @@ const OlympicFacts = () => {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Section Analyse PIB-Médailles */}
+        {activeSection === 'gdp-analysis' && (
+          <div className="section-container">
+            <div className="section-header">
+              <h2>📊 Analyse PIB-Médailles</h2>
+              <p>Explorez la corrélation entre la puissance économique des pays et leurs performances aux Jeux Olympiques</p>
+            </div>
+            
+            <GDPMedalsAnalysis />
           </div>
         )}
       </div>

@@ -14,6 +14,8 @@ from routes.medal_routes import medal_bp
 from routes.host_routes import host_bp
 from routes.olympic_results_routes import olympic_results_bp
 from routes.health_routes import health_bp
+from routes.gdp_analysis_routes import gdp_analysis_bp
+from routes.prediction_routes import prediction_bp
 
 # Charger les variables d'environnement
 load_dotenv('config.env')
@@ -34,6 +36,8 @@ def create_app():
     app.register_blueprint(host_bp)
     app.register_blueprint(olympic_results_bp)
     app.register_blueprint(health_bp)
+    app.register_blueprint(gdp_analysis_bp, url_prefix='/api/gdp-analysis')
+    app.register_blueprint(prediction_bp)
 
     # Route de base
     @app.route('/')
@@ -51,7 +55,8 @@ def create_app():
                 'medals': '/api/medals',
                 'rewards': '/api/rewards',
                 'hosts': '/api/hosts',
-                'olympic_results': '/api/olympic_results'
+                'olympic_results': '/api/olympic_results',
+                'gdp_analysis': '/api/gdp-analysis'
             },
             'parameters': {
                 'limit': 'Query parameter pour limiter les résultats (ex: ?limit=20)'
@@ -79,18 +84,18 @@ def main():
     else:
         print("❌ Échec de la connexion Supabase")
     
-    print("=" * 60)
-    print("🎯 SERVEUR DEMARRE - Prêt à recevoir des requêtes")
-    print("📋 Endpoints disponibles:")
-    print("   • GET  /                    - Documentation API")
-    print("   • GET  /api/health          - État de l'API")
-    print("   • GET  /api/test            - Test simple")
-    print("   • GET  /api/athletes        - Liste des athlètes")
-    print("   • GET  /api/medals          - Médailles (m_award)")
-    print("   • GET  /api/rewards         - Récompenses (medals)")
-    print("   • GET  /api/hosts           - Villes hôtes")
-    print("   • GET  /api/olympic_results - Résultats olympiques")
-    print("=" * 60)
+    # print("=" * 60)
+    # print("🎯 SERVEUR DEMARRE - Prêt à recevoir des requêtes")
+    # print("📋 Endpoints disponibles:")
+    # print("   • GET  /                    - Documentation API")
+    # print("   • GET  /api/health          - État de l'API")
+    # print("   • GET  /api/test            - Test simple")
+    # print("   • GET  /api/athletes        - Liste des athlètes")
+    # print("   • GET  /api/medals          - Médailles (m_award)")
+    # print("   • GET  /api/rewards         - Récompenses (medals)")
+    # print("   • GET  /api/hosts           - Villes hôtes")
+    # print("   • GET  /api/olympic_results - Résultats olympiques")
+    # print("=" * 60)
     
     try:
         app.run(

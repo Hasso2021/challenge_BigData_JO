@@ -5,7 +5,7 @@ from database.supabase_client import get_supabase_client
 
 class OlympicResultsService:
     @staticmethod
-    def get_olympic_results(page=1, limit=20, search='', sort_by='', sort_order='asc', filters=None):
+    def get_olympic_results(page=1, limit=None, search='', sort_by='', sort_order='asc', filters=None):
         """Récupérer les résultats olympiques avec filtres et pagination"""
         try:
             supabase = get_supabase_client()
@@ -37,9 +37,11 @@ class OlympicResultsService:
             else:
                 query = query.order('year.desc')
             
-            # Appliquer la pagination
-            offset = (page - 1) * limit
-            query = query.range(offset, offset + limit - 1)
+            # Appliquer la pagination seulement si limit est spécifié
+            if limit is not None:
+                offset = (page - 1) * limit
+                query = query.range(offset, offset + limit - 1)
+            # Si limit n'est pas spécifié, on retourne tous les résultats
             
             result = query.execute()
             
@@ -49,7 +51,7 @@ class OlympicResultsService:
                 'total': result.count,
                 'page': page,
                 'limit': limit,
-                'total_pages': (result.count + limit - 1) // limit if result.count else 0
+                'total_pages': (result.count + limit - 1) // limit if result.count and limit else 1
             }
         except Exception as error:
             return {

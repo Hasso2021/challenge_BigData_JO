@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Analysis.css';
+import '../styles/Analysis.css';
 import CountryPerformanceCharts from '../components/CountryPerformanceCharts';
 import TemporalTrendsCharts from '../components/TemporalTrendsCharts';
 import SuccessFactorsCharts from '../components/SuccessFactorsCharts';

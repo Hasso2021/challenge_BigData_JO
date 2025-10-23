@@ -1,5 +1,5 @@
 import React from 'react';
-import './OlympicRings.css';
+import '../styles/OlympicRings.css';
 
 const OlympicRings = () => {
   return (

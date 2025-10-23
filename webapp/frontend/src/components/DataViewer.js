@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { olympicDataService } from '../services/api';
-import './DataViewer.css';
+import '../styles/DataViewer.css';
 
 const DataViewer = ({ dataSource, onClose }) => {
   const [data, setData] = useState([]);
@@ -80,15 +80,42 @@ const DataViewer = ({ dataSource, onClose }) => {
           // Gérer les filtres de type range (min/max)
           if (key.includes('_min')) {
             const baseKey = key.replace('_min', '');
-            if (!params[baseKey]) params[baseKey] = {};
-            params[baseKey].min = value;
+            params[`${baseKey}_min`] = value;
           } else if (key.includes('_max')) {
             const baseKey = key.replace('_max', '');
-            if (!params[baseKey]) params[baseKey] = {};
-            params[baseKey].max = value;
+            params[`${baseKey}_max`] = value;
           } else {
-            // Filtres normaux
-            params[key] = value;
+            // Mapper les noms de filtres frontend vers backend
+            const filterMapping = {
+              'athlete_full_name': 'search',
+              'year': 'year',
+              'sport': 'sport',
+              'event': 'event',
+              'event_gender': 'event_gender',
+              'noc': 'country',
+              'country': 'country',
+              'medal': 'medal_type',
+              'award_count': 'award_count',
+              'games_slug': 'games_slug',
+              'participant_type': 'participant_type',
+              'participant_title': 'participant_title',
+              'athlete': 'athlete',
+              'season': 'season',
+              'city': 'city',
+              'slug': 'slug',
+              'name': 'name',
+              'start_date': 'start_date',
+              'end_date': 'end_date'
+            };
+            
+            const backendKey = filterMapping[key] || key;
+            
+            // Gestion spéciale pour la recherche
+            if (backendKey === 'search') {
+              params.search = value;
+            } else {
+              params[backendKey] = value;
+            }
           }
         }
       });
@@ -150,6 +177,11 @@ const DataViewer = ({ dataSource, onClose }) => {
       return newFilters;
     });
     setCurrentPage(1);
+  };
+
+  const applyFilters = () => {
+    setCurrentPage(1);
+    loadData();
   };
 
   const clearFilters = () => {
@@ -386,12 +418,19 @@ const DataViewer = ({ dataSource, onClose }) => {
             {renderFilters()}
           </div>
           <div className="filter-actions">
-            <button className="btn btn-primary" onClick={loadData}>
+            <button className="btn btn-primary" onClick={applyFilters}>
               🔍 Appliquer les filtres
             </button>
             <button className="btn btn-outline" onClick={clearFilters}>
               Effacer les filtres
             </button>
+            {Object.keys(filters).length > 0 && (
+              <div className="active-filters-indicator">
+                <span className="filter-count">
+                  {Object.keys(filters).filter(key => filters[key] !== '' && filters[key] !== null && filters[key] !== undefined).length} filtre(s) actif(s)
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

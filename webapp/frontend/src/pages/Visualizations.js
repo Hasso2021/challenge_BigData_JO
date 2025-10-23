@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +14,9 @@ import {
   RadialLinearScale,
 } from 'chart.js';
 import { Bar, Doughnut, Line, Pie, Radar } from 'react-chartjs-2';
-import './Visualizations.css';
+import OlympicRings from '../components/OlympicRings';
+import { olympicDataService } from '../services/api';
+import '../styles/Visualizations.css';
 
 // Register Chart.js components
 ChartJS.register(
@@ -30,51 +33,76 @@ ChartJS.register(
 );
 
 const Visualizations = () => {
-  const [selectedVisualization, setSelectedVisualization] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const visualizationOptions = [
-    { 
-      value: 'medal-timeline', 
-      label: 'Médaille Timeline',
-      icon: '📈',
-      description: 'Évolution des médailles par pays au fil du temps'
-    },
-    { 
-      value: 'genre-composition', 
-      label: 'Genre & Composition',
-      icon: '👥',
-      description: 'Analyse de la participation par genre'
-    },
-    { 
-      value: 'medals-vs-gdp', 
-      label: 'Médailles VS PIB',
-      icon: '💰',
-      description: 'Corrélation entre performance et richesse nationale'
-    },
-    { 
-      value: 'world-seasons', 
-      label: 'Vue Monde - Saisons',
-      icon: '🌍',
-      description: 'Comparaison Jeux d\'été vs d\'hiver'
-    },
-    { 
-      value: 'world-sports', 
-      label: 'Vue Monde - Sport',
-      icon: '🏃‍♂️',
-      description: 'Répartition des médailles par sport'
-    }
-  ];
-
-  const handleVisualizationChange = (event) => {
-    setIsLoading(true);
-    setSelectedVisualization(event.target.value);
-    
-    // Simulate loading time for better UX
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+  const location = useLocation();
+  
+  // Determine which visualization to show based on the current route
+  const getCurrentVisualization = () => {
+    const path = location.pathname;
+    if (path.includes('/timeline')) return 'medal-timeline';
+    if (path.includes('/gender')) return 'genre-composition';
+    if (path.includes('/gdp')) return 'medals-vs-gdp';
+    if (path.includes('/world-seasons')) return 'world-seasons';
+    if (path.includes('/world-sport')) return 'world-sports';
+    return 'default';
   };
+
+  const currentVisualization = getCurrentVisualization();
+
+  // Load real GDP data when medals-vs-gdp visualization is selected
+  useEffect(() => {
+    console.log('🔍 Current visualization:', currentVisualization);
+    console.log('🔍 Location pathname:', location.pathname);
+    
+    const fetchRealGDPData = async () => {
+      if (currentVisualization === 'medals-vs-gdp') {
+        try {
+          console.log('🔄 Chargement des données PIB réelles...');
+          console.log('📍 URL API:', process.env.REACT_APP_API_URL || 'http://localhost:5000/api');
+          
+          const response = await olympicDataService.getRealGDPMedalsData();
+          console.log('📊 Réponse complète:', response);
+          
+          if (response.data && response.data.status === 'success') {
+            console.log('✅ Données PIB chargées:', response.data.data);
+            console.log('📈 Labels:', response.data.data.labels);
+            console.log('💰 GDP Data:', response.data.data.gdp_data);
+            console.log('🏅 Medals Data:', response.data.data.medals_data);
+            
+            setMedalsVsGdpData({
+              labels: response.data.data.labels,
+              datasets: [
+                {
+                  label: 'PIB (Milliards USD)',
+                  data: response.data.data.gdp_data,
+                  backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 2,
+                  yAxisID: 'y',
+                },
+                {
+                  label: 'Médailles Totales',
+                  data: response.data.data.medals_data,
+                  backgroundColor: 'rgba(255, 206, 86, 0.8)',
+                  borderColor: 'rgba(255, 206, 86, 1)',
+                  borderWidth: 2,
+                  yAxisID: 'y1',
+                }
+              ]
+            });
+          } else {
+            console.error('❌ Erreur dans la réponse API:', response.data);
+            // Pas de fallback - afficher un message d'erreur
+            console.log('❌ Impossible de charger les données depuis l\'API');
+          }
+        } catch (error) {
+          console.error('❌ Erreur lors du chargement des données PIB réelles:', error);
+          console.log('❌ Impossible de charger les données depuis l\'API');
+        }
+      }
+    };
+
+    fetchRealGDPData();
+  }, [currentVisualization]);
 
   // Medal Timeline Data
   const medalTimelineData = {
@@ -136,13 +164,13 @@ const Visualizations = () => {
     ]
   };
 
-  // Medals vs GDP Data
-  const medalsVsGdpData = {
-    labels: ['États-Unis', 'Chine', 'Japon', 'Allemagne', 'France', 'Royaume-Uni', 'Italie', 'Canada', 'Australie', 'Corée du Sud'],
+  // Medals vs GDP Data - Dynamic state
+  const [medalsVsGdpData, setMedalsVsGdpData] = useState({
+    labels: [],
     datasets: [
       {
         label: 'PIB (Milliards USD)',
-        data: [21000, 14000, 5000, 3800, 2600, 2800, 2000, 1700, 1500, 1800],
+        data: [],
         backgroundColor: 'rgba(75, 192, 192, 0.8)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -150,14 +178,14 @@ const Visualizations = () => {
       },
       {
         label: 'Médailles Totales',
-        data: [113, 88, 58, 37, 33, 65, 40, 22, 46, 6],
+        data: [],
         backgroundColor: 'rgba(255, 206, 86, 0.8)',
         borderColor: 'rgba(255, 206, 86, 1)',
         borderWidth: 2,
         yAxisID: 'y1',
       }
     ]
-  };
+  });
 
   // World Seasons Data
   const worldSeasonsData = {
@@ -256,16 +284,7 @@ const Visualizations = () => {
   };
 
   const renderSelectedVisualization = () => {
-    if (isLoading) {
-      return (
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Chargement de la visualisation...</p>
-        </div>
-      );
-    }
-
-    switch (selectedVisualization) {
+    switch (currentVisualization) {
       case 'medal-timeline':
         return (
           <div className="visualization-content">
@@ -446,6 +465,15 @@ const Visualizations = () => {
   return (
     <div className="visualizations-container">
       <div className="page-header">
+        <div className="header-navigation">
+          <Link to="/" className="home-nav-button">
+            <span className="nav-icon">🏠</span>
+            <span className="nav-text">Accueil</span>
+          </Link>
+          <div className="olympic-rings-nav">
+            <OlympicRings />
+          </div>
+        </div>
         <h1 className="page-title">VISUALISATIONS</h1>
         <p className="page-subtitle">
           Explorez les données olympiques à travers des visualisations interactives
@@ -453,28 +481,6 @@ const Visualizations = () => {
       </div>
       
       <div className="visualizations-content">
-        {/* Dropdown Selection */}
-        <div className="visualization-selector">
-          <div className="selector-header">
-            <h3>🎨 Sélectionnez une Visualisation</h3>
-            <p>Choisissez parmi nos analyses interactives</p>
-          </div>
-          <div className="dropdown-container">
-            <select 
-              value={selectedVisualization}
-              onChange={handleVisualizationChange}
-              className="visualization-dropdown"
-            >
-              <option value="">-- Choisir une visualisation --</option>
-              {visualizationOptions.map(option => (
-                <option key={option.value} value={option.value}>
-                  {option.icon} {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
         {/* Dynamic Content */}
         <div className="visualization-display">
           {renderSelectedVisualization()}

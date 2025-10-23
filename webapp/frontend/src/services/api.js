@@ -102,6 +102,48 @@ export const olympicDataService = {
   // Statistiques
   getStats: () => api.get('/stats'),
   getCountryStats: (country) => api.get('/stats/country', { params: { country } }),
+
+  // Analyse PIB-Médailles
+  getGDPAnalysisSummary: () => {
+    return api.get('/gdp-analysis/summary');
+  },
+  getGDPCorrelationByYear: (years = null) => {
+    return api.get('/gdp-analysis/correlation-by-year', { params: years ? { years } : {} });
+  },
+  getGDPCorrelationBySportCost: (year = 2022) => {
+    return api.get('/gdp-analysis/correlation-by-sport-cost', { params: { year } });
+  },
+  getGDPCorrelationPerCapita: (year = 2022) => {
+    return api.get('/gdp-analysis/correlation-gdp-per-capita', { params: { year } });
+  },
+  getRealGDPMedalsData: () => {
+    return api.get('/gdp-analysis/real-gdp-medals-data');
+  },
+
+  // Prédictions
+  predictCountryMedals: (country, year = 2024, model = 'ma') => {
+    return api.get(`/predictions/country/${country}`, { 
+      params: { year, model } 
+    });
+  },
+  predictTopCountries: (topN = 25, year = 2024, model = 'ma') => {
+    return api.get('/predictions/top-countries', { 
+      params: { top_n: topN, year, model } 
+    });
+  },
+  predictAthleteMedals: (limit = 50, model = 'best') => {
+    return api.get('/predictions/athletes', { 
+      params: { limit, model } 
+    });
+  },
+  predictSportPerformance: (sport = '', year = 2024, limit = 20) => {
+    return api.get('/predictions/sports', { 
+      params: { sport, year, limit } 
+    });
+  },
+  getModelsStatus: () => {
+    return api.get('/predictions/models/status');
+  },
 };
 
 export default api;

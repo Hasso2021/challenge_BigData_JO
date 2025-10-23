@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import DataViewer from '../components/DataViewer';
-import './Data.css';
+import OlympicRings from '../components/OlympicRings';
+import '../styles/Data.css';
 
 const Data = () => {
   const [selectedDataSource, setSelectedDataSource] = useState(null);
@@ -47,6 +49,15 @@ const Data = () => {
   return (
     <div className="data-container">
       <div className="page-header">
+        <div className="header-navigation">
+          <Link to="/" className="home-nav-button">
+            <span className="nav-icon">🏠</span>
+            <span className="nav-text">Accueil</span>
+          </Link>
+          <div className="olympic-rings-nav">
+            <OlympicRings />
+          </div>
+        </div>
         <h1 className="page-title">DONNÉES OLYMPIQUES</h1>
         <p className="page-subtitle">
           Explorez et analysez les données complètes des Jeux Olympiques

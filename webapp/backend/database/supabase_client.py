@@ -41,7 +41,7 @@ def test_connection() -> bool:
 def get_athletes(limit: int = 100):
     """Récupère les athlètes depuis la base de données"""
     try:
-        result = supabase.table('athlete').select('*').limit(limit).execute()
+        result = supabase.table('athlete').select('*').execute()
         return result.data
     except Exception as error:
         print(f'Erreur lors de la récupération des athlètes: {error}')
@@ -50,7 +50,7 @@ def get_athletes(limit: int = 100):
 def get_medals(limit: int = 100):
     """Récupère les médailles depuis la base de données"""
     try:
-        result = supabase.table('medal_awards').select('*').limit(limit).execute()
+        result = supabase.table('medal_awards').select('*').execute()
         return result.data
     except Exception as error:
         print(f'Erreur lors de la récupération des médailles: {error}')
@@ -59,7 +59,7 @@ def get_medals(limit: int = 100):
 def get_hosts(limit: int = 100):
     """Récupère les données des villes hôtes depuis la base de données"""
     try:
-        result = supabase.table('hosts').select('*').limit(limit).execute()
+        result = supabase.table('hosts').select('*').execute()
         return result.data
     except Exception as error:
         print(f'Erreur lors de la récupération des données hosts: {error}')

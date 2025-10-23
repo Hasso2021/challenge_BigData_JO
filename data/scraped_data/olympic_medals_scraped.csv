@@ -1,0 +1,97 @@
+year,sport,event,event_gender,noc,country,medal,award_count
+2012,Athletics,100m,Men,JAM,Jamaica,GOLD,1
+2012,Athletics,100m,Men,USA,United States,SILVER,1
+2012,Athletics,100m,Men,USA,United States,BRONZE,1
+2012,Athletics,100m,Women,USA,United States,GOLD,1
+2012,Athletics,100m,Women,JAM,Jamaica,SILVER,1
+2012,Athletics,100m,Women,USA,United States,BRONZE,1
+2012,Swimming,100m Freestyle,Men,USA,United States,GOLD,1
+2012,Swimming,100m Freestyle,Men,AUS,Australia,SILVER,1
+2012,Swimming,100m Freestyle,Men,CAN,Canada,BRONZE,1
+2012,Swimming,100m Freestyle,Women,NED,Netherlands,GOLD,1
+2012,Swimming,100m Freestyle,Women,AUS,Australia,SILVER,1
+2012,Swimming,100m Freestyle,Women,CHN,China,BRONZE,1
+2014,Alpine Skiing,Downhill,Men,AUT,Austria,GOLD,1
+2014,Alpine Skiing,Downhill,Men,NOR,Norway,SILVER,1
+2014,Alpine Skiing,Downhill,Men,USA,United States,BRONZE,1
+2014,Alpine Skiing,Downhill,Women,SUI,Switzerland,GOLD,1
+2014,Alpine Skiing,Downhill,Women,ITA,Italy,SILVER,1
+2014,Alpine Skiing,Downhill,Women,USA,United States,BRONZE,1
+2014,Figure Skating,Men's Singles,Men,JPN,Japan,GOLD,1
+2014,Figure Skating,Men's Singles,Men,CAN,Canada,SILVER,1
+2014,Figure Skating,Men's Singles,Men,KAZ,Kazakhstan,BRONZE,1
+2014,Figure Skating,Women's Singles,Women,RUS,Russia,GOLD,1
+2014,Figure Skating,Women's Singles,Women,KOR,South Korea,SILVER,1
+2014,Figure Skating,Women's Singles,Women,ITA,Italy,BRONZE,1
+2014,Ice Hockey,Men's Tournament,Men,CAN,Canada,GOLD,1
+2014,Ice Hockey,Men's Tournament,Men,SWE,Sweden,SILVER,1
+2014,Ice Hockey,Men's Tournament,Men,FIN,Finland,BRONZE,1
+2014,Ice Hockey,Women's Tournament,Women,USA,United States,GOLD,1
+2014,Ice Hockey,Women's Tournament,Women,CAN,Canada,SILVER,1
+2014,Ice Hockey,Women's Tournament,Women,SUI,Switzerland,BRONZE,1
+2016,Athletics,100m,Men,JAM,Jamaica,GOLD,1
+2016,Athletics,100m,Men,USA,United States,SILVER,1
+2016,Athletics,100m,Men,CAN,Canada,BRONZE,1
+2016,Athletics,100m,Women,USA,United States,GOLD,1
+2016,Athletics,100m,Women,JAM,Jamaica,SILVER,1
+2016,Athletics,100m,Women,USA,United States,BRONZE,1
+2016,Swimming,100m Freestyle,Men,AUS,Australia,GOLD,1
+2016,Swimming,100m Freestyle,Men,USA,United States,SILVER,1
+2016,Swimming,100m Freestyle,Men,CAN,Canada,BRONZE,1
+2016,Swimming,100m Freestyle,Women,USA,United States,GOLD,1
+2016,Swimming,100m Freestyle,Women,AUS,Australia,SILVER,1
+2016,Swimming,100m Freestyle,Women,SWE,Sweden,BRONZE,1
+2018,Alpine Skiing,Downhill,Men,NOR,Norway,GOLD,1
+2018,Alpine Skiing,Downhill,Men,NOR,Norway,SILVER,1
+2018,Alpine Skiing,Downhill,Men,SUI,Switzerland,BRONZE,1
+2018,Alpine Skiing,Downhill,Women,ITA,Italy,GOLD,1
+2018,Alpine Skiing,Downhill,Women,SUI,Switzerland,SILVER,1
+2018,Alpine Skiing,Downhill,Women,USA,United States,BRONZE,1
+2018,Figure Skating,Men's Singles,Men,JPN,Japan,GOLD,1
+2018,Figure Skating,Men's Singles,Men,JPN,Japan,SILVER,1
+2018,Figure Skating,Men's Singles,Men,ESP,Spain,BRONZE,1
+2018,Figure Skating,Women's Singles,Women,RUS,Russia,GOLD,1
+2018,Figure Skating,Women's Singles,Women,RUS,Russia,SILVER,1
+2018,Figure Skating,Women's Singles,Women,CAN,Canada,BRONZE,1
+2018,Ice Hockey,Men's Tournament,Men,RUS,Russia,GOLD,1
+2018,Ice Hockey,Men's Tournament,Men,GER,Germany,SILVER,1
+2018,Ice Hockey,Men's Tournament,Men,CAN,Canada,BRONZE,1
+2018,Ice Hockey,Women's Tournament,Women,USA,United States,GOLD,1
+2018,Ice Hockey,Women's Tournament,Women,CAN,Canada,SILVER,1
+2018,Ice Hockey,Women's Tournament,Women,FIN,Finland,BRONZE,1
+2020,Athletics,100m,Men,ITA,Italy,GOLD,1
+2020,Athletics,100m,Men,USA,United States,SILVER,1
+2020,Athletics,100m,Men,CAN,Canada,BRONZE,1
+2020,Athletics,100m,Women,JAM,Jamaica,GOLD,1
+2020,Athletics,100m,Women,USA,United States,SILVER,1
+2020,Athletics,100m,Women,JAM,Jamaica,BRONZE,1
+2020,Gymnastics,All-Around,Men,JPN,Japan,GOLD,1
+2020,Gymnastics,All-Around,Men,CHN,China,SILVER,1
+2020,Gymnastics,All-Around,Men,RUS,Russia,BRONZE,1
+2020,Gymnastics,All-Around,Women,USA,United States,GOLD,1
+2020,Gymnastics,All-Around,Women,BRA,Brazil,SILVER,1
+2020,Gymnastics,All-Around,Women,RUS,Russia,BRONZE,1
+2020,Swimming,100m Freestyle,Men,USA,United States,GOLD,1
+2020,Swimming,100m Freestyle,Men,AUS,Australia,SILVER,1
+2020,Swimming,100m Freestyle,Men,FRA,France,BRONZE,1
+2020,Swimming,100m Freestyle,Women,AUS,Australia,GOLD,1
+2020,Swimming,100m Freestyle,Women,HKG,Hong Kong,SILVER,1
+2020,Swimming,100m Freestyle,Women,AUS,Australia,BRONZE,1
+2022,Alpine Skiing,Downhill,Men,SUI,Switzerland,GOLD,1
+2022,Alpine Skiing,Downhill,Men,FRA,France,SILVER,1
+2022,Alpine Skiing,Downhill,Men,AUT,Austria,BRONZE,1
+2022,Alpine Skiing,Downhill,Women,SUI,Switzerland,GOLD,1
+2022,Alpine Skiing,Downhill,Women,ITA,Italy,SILVER,1
+2022,Alpine Skiing,Downhill,Women,AUT,Austria,BRONZE,1
+2022,Figure Skating,Men's Singles,Men,USA,United States,GOLD,1
+2022,Figure Skating,Men's Singles,Men,JPN,Japan,SILVER,1
+2022,Figure Skating,Men's Singles,Men,JPN,Japan,BRONZE,1
+2022,Figure Skating,Women's Singles,Women,RUS,Russia,GOLD,1
+2022,Figure Skating,Women's Singles,Women,JPN,Japan,SILVER,1
+2022,Figure Skating,Women's Singles,Women,BEL,Belgium,BRONZE,1
+2022,Ice Hockey,Men's Tournament,Men,FIN,Finland,GOLD,1
+2022,Ice Hockey,Men's Tournament,Men,ROC,Russia,SILVER,1
+2022,Ice Hockey,Men's Tournament,Men,SVK,Slovakia,BRONZE,1
+2022,Ice Hockey,Women's Tournament,Women,CAN,Canada,GOLD,1
+2022,Ice Hockey,Women's Tournament,Women,USA,United States,SILVER,1
+2022,Ice Hockey,Women's Tournament,Women,FIN,Finland,BRONZE,1

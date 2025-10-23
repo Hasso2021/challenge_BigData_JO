@@ -12,7 +12,7 @@ def get_medals():
     """Récupérer les données de médailles avec filtres et pagination"""
     # Récupérer les paramètres de la requête
     page = request.args.get('page', 1, type=int)
-    limit = request.args.get('limit', 20, type=int)
+    limit = request.args.get('limit', type=int)  # Pas de limite par défaut
     search = request.args.get('search', '')
     sort_by = request.args.get('sort_by', '')
     sort_order = request.args.get('sort_order', 'asc')

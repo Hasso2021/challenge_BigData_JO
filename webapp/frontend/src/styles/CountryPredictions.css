@@ -1,0 +1,289 @@
+.country-predictions {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.prediction-controls {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.prediction-controls h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.controls-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.control-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.control-group input,
+.control-group select {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.control-group button {
+  padding: 12px 24px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.control-group button:hover:not(:disabled) {
+  background: #ff5252;
+  transform: translateY(-2px);
+}
+
+.control-group button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  border-left: 4px solid #c62828;
+}
+
+.prediction-result {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border: 1px solid #e0e0e0;
+}
+
+.prediction-result h4 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.3em;
+}
+
+.medal-prediction {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.medal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.medal-item:hover {
+  transform: translateY(-5px);
+}
+
+.medal-item.gold {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #8b6914;
+}
+
+.medal-item.silver {
+  background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+  color: #666;
+}
+
+.medal-item.bronze {
+  background: linear-gradient(135deg, #cd7f32, #daa520);
+  color: #8b4513;
+}
+
+.medal-item.total {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.medal-icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.medal-count {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.medal-label {
+  font-size: 0.9em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.model-info {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.top-countries-section {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.top-countries-section h4 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.3em;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 1.1em;
+}
+
+.top-countries-list {
+  display: grid;
+  gap: 10px;
+}
+
+.country-rank-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.country-rank-item:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+  border-left-color: #667eea;
+}
+
+.country-rank-item:nth-child(1) {
+  border-left-color: #ffd700;
+  background: linear-gradient(90deg, #fff9c4, #f8f9fa);
+}
+
+.country-rank-item:nth-child(2) {
+  border-left-color: #c0c0c0;
+  background: linear-gradient(90deg, #f0f0f0, #f8f9fa);
+}
+
+.country-rank-item:nth-child(3) {
+  border-left-color: #cd7f32;
+  background: linear-gradient(90deg, #f4e4bc, #f8f9fa);
+}
+
+.rank {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #667eea;
+  min-width: 40px;
+  text-align: center;
+}
+
+.country-name {
+  flex: 1;
+  font-weight: 600;
+  color: #333;
+  margin-left: 15px;
+}
+
+.medals-summary {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9em;
+}
+
+.medals-summary span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.medals-summary .gold {
+  color: #b8860b;
+}
+
+.medals-summary .silver {
+  color: #666;
+}
+
+.medals-summary .bronze {
+  color: #8b4513;
+}
+
+.medals-summary .total {
+  color: #667eea;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .controls-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .control-group {
+    min-width: auto;
+  }
+  
+  .medal-prediction {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .country-rank-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .medals-summary {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

@@ -52,3 +52,4 @@ year,season,city,country,slug,name,start_date,end_date,duration_days
 2018,Winter,PyeongChang,South Korea,pyeongchang-2018,PyeongChang 2018,2018-02-08 23:00:00+00:00,2018-02-25 08:00:00+00:00,16
 2020,Summer,Tokyo,Japan,tokyo-2020,Tokyo 2020,2021-07-23 11:00:00+00:00,2021-08-08 14:00:00+00:00,16
 2022,Winter,Beijing,China,beijing-2022,Beijing 2022,2022-02-04 15:00:00+00:00,2022-02-20 12:00:00+00:00,15
+2024,Summer,Paris,France,paris-2024,Paris 2024,2024-07-26 17:30:00+00:00,2024-08-11 19:00:00+00:00,17

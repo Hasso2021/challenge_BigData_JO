@@ -58,7 +58,7 @@ def get_athletes():
     """Récupérer la liste des athlètes"""
     try:
         supabase = get_supabase_client()
-        result = supabase.table('athlete').select('*').limit(10).execute()
+        result = supabase.table('athlete').select('*').execute()
         
         return jsonify({
             'status': 'success',
@@ -76,7 +76,7 @@ def get_olympic_results():
     """Récupérer la liste des athlètes"""
     try:
         supabase = get_supabase_client()
-        result = supabase.table('olympic_results').select('*').limit(10).execute()
+        result = supabase.table('olympic_results').select('*').execute()
         
         return jsonify({
             'status': 'success',
@@ -94,7 +94,7 @@ def get_m_award():
     """Récupérer les données de médailles"""
     try:
         supabase = get_supabase_client()
-        result = supabase.table('m_award').select('*').limit(10).execute()
+        result = supabase.table('m_award').select('*').execute()
         
         return jsonify({
             'status': 'success',
@@ -113,7 +113,7 @@ def get_medals():
     """Récupérer les données de médailles"""
     try:
         supabase = get_supabase_client()
-        result = supabase.table('medals').select('*').limit(10).execute()
+        result = supabase.table('medals').select('*').execute()
         
         return jsonify({
             'status': 'success',

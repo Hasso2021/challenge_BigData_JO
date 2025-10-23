@@ -92,6 +92,24 @@
   justify-content: center;
   padding-top: 1rem;
   border-top: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.active-filters-indicator {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.filter-count {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .filter-group {

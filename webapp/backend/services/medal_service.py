@@ -5,7 +5,7 @@ from database.supabase_client import get_supabase_client
 
 class MedalService:
     @staticmethod
-    def get_medals(page=1, limit=20, search='', sort_by='', sort_order='asc', filters=None):
+    def get_medals(page=1, limit=None, search='', sort_by='', sort_order='asc', filters=None):
         """Récupérer les données de médailles avec filtres et pagination"""
         try:
             supabase = get_supabase_client()
@@ -39,9 +39,11 @@ class MedalService:
             else:
                 query = query.order('year.desc')
             
-            # Appliquer la pagination
-            offset = (page - 1) * limit
-            query = query.range(offset, offset + limit - 1)
+            # Appliquer la pagination seulement si limit est spécifié
+            if limit is not None:
+                offset = (page - 1) * limit
+                query = query.range(offset, offset + limit - 1)
+            # Si limit n'est pas spécifié, on retourne tous les résultats
             
             result = query.execute()
             
@@ -51,7 +53,7 @@ class MedalService:
                 'total': result.count,
                 'page': page,
                 'limit': limit,
-                'total_pages': (result.count + limit - 1) // limit if result.count else 0
+                'total_pages': (result.count + limit - 1) // limit if result.count and limit else 1
             }
         except Exception as error:
             return {
@@ -451,8 +453,8 @@ class MedalService:
         try:
             supabase = get_supabase_client()
             
-            # Récupérer toutes les médailles avec les pays
-            result = supabase.table('m_award').select('noc, medal, award_count, year').execute()
+            # Récupérer toutes les médailles avec les pays (sans limite)
+            result = supabase.table('m_award').select('noc, medal, award_count, year').limit(10000).execute()
             
             if not result.data:
                 return {
