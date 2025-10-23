@@ -42,7 +42,7 @@ def train():
     y = agg['total']
 
     preproc = ColumnTransformer([
-        ('country_ohe', OneHotEncoder(handle_unknown='ignore', sparse=False), ['country'])
+        ('country_ohe', OneHotEncoder(handle_unknown='ignore', sparse_output=False), ['country'])
     ], remainder='passthrough')
 
     models = [

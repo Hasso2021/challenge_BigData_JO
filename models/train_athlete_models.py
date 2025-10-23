@@ -42,7 +42,7 @@ def train():
 
     cat_cols = ['athlete', 'country', 'sport']
     preproc = ColumnTransformer([
-        ('cat', OneHotEncoder(handle_unknown='ignore', sparse=False), cat_cols)
+        ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_cols)
     ], remainder='passthrough')
 
     models = [
