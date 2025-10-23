@@ -21,7 +21,7 @@ except Exception:
     pd = None
 
 
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "clean"))
+DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "clean"))
 CSV_MEDALS = os.path.join(DATA_DIR, "olympic_medals_clean_v2.csv")          # medals by event/athlete
 CSV_RESULTS = os.path.join(DATA_DIR, "olympic_results_clean.csv")            # historical summaries (optional)
 
@@ -188,41 +188,39 @@ class PredictionService:
         """
         Return list of dicts: [{country, gold, silver, bronze, total}, ...] length == top_n
         """
-        # Try model-based top25
-        if joblib:
-            topm = None
-            if os.path.exists(TOP25_BEST):
-                try:
-                    topm = joblib.load(TOP25_BEST)
-                except Exception:
-                    topm = None
-            if topm is None and os.path.exists(TOP25_SECOND):
-                try:
-                    topm = joblib.load(TOP25_SECOND)
-                except Exception:
-                    topm = None
-            if topm is not None:
-                try:
-                    pipeline = topm['model'] if isinstance(topm, dict) and 'model' in topm else topm
-                    countries = pd.Series(df['country'].unique())
-                    X = pd.DataFrame({'country': countries, 'year': year})
-                    preds = pipeline.predict(X)
-                    df_out = pd.DataFrame({'country': countries, 'total': preds})
-                    df_out = df_out.sort_values('total', ascending=False).head(top_n)
-                    results = []
-                    for _, r in df_out.iterrows():
-                        c = r['country']
-                        total = max(0, int(round(float(r['total']))))
-                        g_prop, s_prop, b_prop = _historical_props(df, c)
-                        gold = int(round(total * g_prop))
-                        silver = int(round(total * s_prop))
-                        bronze = int(round(total * b_prop))
-                        results.append({'country': c, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze, 'note': 'model_top'})
-                    return results
-                except Exception:
-                    pass
-
+        # Load CSV early (used by both model and fallback code)
         df = _safe_read_csv(CSV_MEDALS)
+
+        # Try model-based top25 when a trained pipeline is available and caller requested it
+        if model in ("best", "second"):
+            try:
+                # ensure models cache is loaded
+                PredictionService._load_models()
+                topm = PredictionService._models.get(f"top25_{model}")
+                if topm is not None and isinstance(topm, dict) and topm.get('model') is not None:
+                    pipeline = topm['model']
+                    if df is not None and 'country' in df.columns:
+                        countries = pd.Series(df['country'].dropna().unique())
+                        X = pd.DataFrame({'country': countries, 'year': [int(year)] * len(countries)})
+                        preds = pipeline.predict(X)
+                        df_out = pd.DataFrame({'country': countries, 'total': preds})
+                        df_out = df_out.sort_values('total', ascending=False).head(top_n)
+                        results = []
+                        for _, r in df_out.iterrows():
+                            c = r['country']
+                            total = max(0, int(round(float(r['total']))))
+                            g_prop, s_prop, b_prop = _historical_props(df, c)
+                            gold = int(round(total * g_prop))
+                            silver = int(round(total * s_prop))
+                            bronze = int(round(total * b_prop))
+                            results.append({'country': c, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze, 'note': 'model_top'})
+                        return results
+            except Exception:
+                # fallback to historical aggregation below
+                pass
+
+        if df is None:
+            return []
         if df is None:
             return []
 
@@ -253,33 +251,57 @@ class PredictionService:
 
     # --------------------- ATHLETES ---------------------
     @staticmethod
-    def predict_athlete_medals(limit: int = 50) -> List[Dict[str, Any]]:
+    def predict_athlete_medals(limit: int = 50, model: str = "best") -> List[Dict[str, Any]]:
         """
         Very simple heuristic:
         - Aggregate historical athlete medals and compute a probability of winning at next Games.
         """
-        df = _safe_read_csv(CSV_MEDALS)
-        if df is None or "participant_type" not in df.columns or "athlete" not in df.columns:
-            return []
+        # Accept model selection and try to use trained athlete pipelines if present
+        def _agg_athlete_df(df):
+            df_ath = df[df["participant_type"] == "Athlete"].copy()
+            if df_ath.empty:
+                return None
+            agg = df_ath.groupby(["athlete", "country", "sport"] , dropna=False)[["gold", "silver", "bronze"]].sum().reset_index()
+            agg["total"] = agg["gold"] + agg["silver"] + agg["bronze"]
+            return agg
 
-        df_ath = df[df["participant_type"] == "Athlete"].copy()
-        if df_ath.empty:
-            return []
+        # default model param support (best/second or heuristic)
+        def _inner(limit:int=50, year:int=2024, model_choice:str="best"):
+            df = _safe_read_csv(CSV_MEDALS)
+            if df is None or "participant_type" not in df.columns or "athlete" not in df.columns:
+                return []
 
-        agg = df_ath.groupby("athlete")[["gold", "silver", "bronze"]].sum()
-        agg["total"] = agg["gold"] + agg["silver"] + agg["bronze"]
-        top = agg.sort_values("total", ascending=False).head(limit)
+            athletes_df = _agg_athlete_df(df)
+            if athletes_df is None:
+                return []
 
-        out = []
-        for athlete, row in top.iterrows():
-            total = int(row["total"])
-            # mock probability from historical success
-            prob = min(0.95, 0.05 + total * 0.03)
-            out.append({
-                "athlete": athlete,
-                "gold": int(row["gold"]),
-                "silver": int(row["silver"]),
-                "bronze": int(row["bronze"]),
-                "prob_medal": round(prob, 2),
-            })
-        return out
+            # try to use a trained athletes pipeline if available
+            try:
+                PredictionService._load_models()
+                mdl = PredictionService._models.get(f"athletes_{model_choice}")
+                if mdl is not None and isinstance(mdl, dict) and mdl.get('model') is not None:
+                    pipe = mdl['model']
+                    # prepare input columns expected by the pipeline
+                    X = athletes_df[["athlete", "country", "sport"]].copy()
+                    # add year/hist_total if pipeline expects passthrough
+                    X["year"] = int(year)
+                    X["hist_total"] = athletes_df["total"]
+                    try:
+                        scores = pipe.predict(X)
+                        athletes_df["score"] = scores
+                        out = athletes_df.sort_values("score", ascending=False).head(limit)
+                        return out[["athlete", "country", "sport", "score", "total"]].to_dict(orient="records")
+                    except Exception:
+                        # fallback to heuristic
+                        pass
+            except Exception:
+                pass
+
+            # fallback heuristic: rank by historical total medals and produce a normalized score
+            out = athletes_df.sort_values("total", ascending=False).head(limit).copy()
+            max_total = out["total"].max() if not out.empty else 1
+            out["score"] = out["total"] / (max_total if max_total > 0 else 1)
+            return out[["athlete", "country", "sport", "score", "total"]].to_dict(orient="records")
+
+        # expose outer with default parameters
+        return _inner(limit=limit, year=2024, model_choice="best")

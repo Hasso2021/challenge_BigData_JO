@@ -33,9 +33,12 @@ def build_athlete_df(df):
     return agg
 
 
-def train():
+def train(quick: bool = False, top_k: int = 1000):
     df = pd.read_csv(DATA)
     agg = build_athlete_df(df)
+    if quick:
+        # focus on top historical athletes to reduce dataset size
+        agg = agg.sort_values('hist_total', ascending=False).head(top_k)
     features = ['athlete', 'country', 'sport', 'year', 'hist_total']
     X = agg[features]
     y = agg['target']
@@ -45,11 +48,19 @@ def train():
         ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_cols)
     ], remainder='passthrough')
 
-    models = [
-        ('rf', RandomForestRegressor(n_estimators=100, random_state=42)),
-        ('gb', GradientBoostingRegressor(random_state=42)),
-        ('lr', LinearRegression())
-    ]
+    # Use faster, lower-cost estimators in quick mode
+    if quick:
+        models = [
+            ('rf', RandomForestRegressor(n_estimators=50, random_state=42, n_jobs=-1)),
+            ('gb', GradientBoostingRegressor(n_estimators=50, random_state=42)),
+            ('lr', LinearRegression())
+        ]
+    else:
+        models = [
+            ('rf', RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)),
+            ('gb', GradientBoostingRegressor(random_state=42)),
+            ('lr', LinearRegression())
+        ]
 
     results = []
     for name, m in models:
@@ -63,8 +74,14 @@ def train():
     results.sort(key=lambda r: r[0])
     best, second = results[0], results[1]
 
-    best_path = os.path.join(OUT_DIR, 'athletes_best.joblib')
-    second_path = os.path.join(OUT_DIR, 'athletes_second.joblib')
+    # choose filenames depending on quick/full mode
+    if quick:
+        best_path = os.path.join(OUT_DIR, 'athletes_quick.joblib')
+        second_path = os.path.join(OUT_DIR, 'athletes_quick_second.joblib')
+    else:
+        best_path = os.path.join(OUT_DIR, 'athletes_best.joblib')
+        second_path = os.path.join(OUT_DIR, 'athletes_second.joblib')
+
     joblib.dump({'model': best[2], 'mae': best[0]}, best_path)
     joblib.dump({'model': second[2], 'mae': second[0]}, second_path)
     print(f"Saved best -> {best_path}")
@@ -72,4 +89,9 @@ def train():
 
 
 if __name__ == '__main__':
-    train()
+    import argparse
+    parser = argparse.ArgumentParser(description='Train athlete models')
+    parser.add_argument('--quick', action='store_true', help='Run a fast training (sample top athletes, fewer estimators)')
+    parser.add_argument('--top-k', type=int, default=1000, help='Number of top athletes to keep in quick mode')
+    args = parser.parse_args()
+    train(quick=args.quick, top_k=args.top_k)
