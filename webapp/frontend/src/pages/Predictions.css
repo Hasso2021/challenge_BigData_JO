@@ -1,0 +1,136 @@
+.predictions-container {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.page-header {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  color: #666666;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.predictions-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.predictions-section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 3rem;
+  border-bottom: 3px solid #0081C8;
+  padding-bottom: 1rem;
+}
+
+.predictions-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.prediction-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.prediction-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border-color: #0081C8;
+}
+
+.prediction-card h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.prediction-card p {
+  color: #666666;
+  line-height: 1.6;
+}
+
+/* webapp/frontend/src/pages/Predictions.css */
+.predictions-page .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+}
+
+.pred-controls {
+  margin: .5rem 0 1rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: .6rem .75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.error {
+  background: #ffeaea;
+  color: #7a0000;
+  padding: .6rem .8rem;
+  border-radius: 8px;
+  margin: .8rem 0;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .predictions-content {
+    padding: 1rem;
+  }
+
+  .predictions-cards {
+    grid-template-columns: 1fr;
+  }
+}
