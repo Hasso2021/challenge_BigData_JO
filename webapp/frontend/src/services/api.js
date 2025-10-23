@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+console.log('🔧 Configuration API:', {
+  API_BASE_URL,
+  REACT_APP_API_URL: process.env.REACT_APP_API_URL
+});
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -11,9 +16,34 @@ const api = axios.create({
 
 // Intercepteur pour les erreurs
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('✅ API Response:', {
+      url: response.config.url,
+      status: response.status,
+      method: response.config.method
+    });
+    return response;
+  },
   (error) => {
-    console.error('API Error:', error);
+    console.error('❌ API Error détaillé:', {
+      message: error.message,
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      url: error.config?.url,
+      method: error.config?.method,
+      baseURL: error.config?.baseURL
+    });
+    
+    // Améliorer les messages d'erreur
+    if (error.code === 'ECONNREFUSED') {
+      error.message = 'Impossible de se connecter au backend. Vérifiez que le serveur Flask est démarré sur le port 5000.';
+    } else if (error.code === 'NETWORK_ERROR') {
+      error.message = 'Erreur réseau. Vérifiez votre connexion internet.';
+    } else if (error.response?.status === 500) {
+      error.message = 'Erreur serveur interne. Vérifiez les logs du backend.';
+    }
+    
     return Promise.reject(error);
   }
 );
@@ -22,52 +52,51 @@ api.interceptors.response.use(
 export const olympicDataService = {
   // Athlètes
   getAthletes: (params = {}) => {
-    const queryParams = {
-      limit: params.limit || 20,
-      page: params.page || 1,
-      ...params
-    };
-    return api.get('/athletes', { params: queryParams });
+    return api.get('/athletes', { params });
   },
   getAthleteById: (id) => api.get(`/athletes/${id}`),
   searchAthletes: (query) => api.get('/athletes', { params: { search: query } }),
 
   // Médailles
   getMedals: (params = {}) => {
-    const queryParams = {
-      limit: params.limit || 20,
-      page: params.page || 1,
-      ...params
-    };
-    return api.get('/medals', { params: queryParams });
+    return api.get('/medals', { params });
   },
   getRewards: (params = {}) => {
-    const queryParams = {
-      limit: params.limit || 20,
-      page: params.page || 1,
-      ...params
-    };
-    return api.get('/rewards', { params: queryParams });
+    return api.get('/rewards', { params });
+  },
+  getFranceMedals: () => {
+    return api.get('/medals/france');
+  },
+  getFranceSuccess: () => {
+    return api.get('/medals/france/success');
+  },
+  getFranceSports: () => {
+    return api.get('/medals/france/sports');
+  },
+  getDominantSports: () => {
+    return api.get('/medals/dominant-sports');
+  },
+  getCountryPerformance: () => {
+    return api.get('/medals/country-performance');
+  },
+  getTemporalTrends: () => {
+    return api.get('/medals/temporal-trends');
+  },
+  getSuccessFactors: () => {
+    return api.get('/medals/success-factors');
   },
 
   // Résultats olympiques
   getResults: (params = {}) => {
-    const queryParams = {
-      limit: params.limit || 20,
-      page: params.page || 1,
-      ...params
-    };
-    return api.get('/olympic_results', { params: queryParams });
+    return api.get('/olympic_results', { params });
   },
 
   // Villes hôtes
   getHosts: (params = {}) => {
-    const queryParams = {
-      limit: params.limit || 50,
-      page: params.page || 1,
-      ...params
-    };
-    return api.get('/hosts', { params: queryParams });
+    return api.get('/hosts', { params });
+  },
+  getHostsRanking: () => {
+    return api.get('/hosts/ranking');
   },
 
   // Statistiques

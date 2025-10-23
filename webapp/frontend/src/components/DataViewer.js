@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { olympicDataService } from '../services/api';
-import { testBackendConnection } from '../utils/testConnection';
 import './DataViewer.css';
 
 const DataViewer = ({ dataSource, onClose }) => {
@@ -10,78 +9,53 @@ const DataViewer = ({ dataSource, onClose }) => {
   const [filters, setFilters] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
-  const [connectionStatus, setConnectionStatus] = useState(null);
 
   const itemsPerPage = 20;
 
-  // Données de démonstration en cas de problème de connexion
-  const demoData = {
-    athletes: [
-      { name: 'Michael Phelps', country: 'USA', sport: 'Swimming', year: 2008, gender: 'M', age: 23 },
-      { name: 'Usain Bolt', country: 'Jamaica', sport: 'Athletics', year: 2008, gender: 'M', age: 22 },
-      { name: 'Simone Biles', country: 'USA', sport: 'Gymnastics', year: 2016, gender: 'F', age: 19 },
-      { name: 'Serena Williams', country: 'USA', sport: 'Tennis', year: 2012, gender: 'F', age: 31 },
-      { name: 'Lionel Messi', country: 'Argentina', sport: 'Football', year: 2008, gender: 'M', age: 21 }
-    ],
-    medals: [
-      { athlete_name: 'Michael Phelps', country: 'USA', sport: 'Swimming', event: '100m Butterfly', medal_type: 'Gold', year: 2008 },
-      { athlete_name: 'Usain Bolt', country: 'Jamaica', sport: 'Athletics', event: '100m', medal_type: 'Gold', year: 2008 },
-      { athlete_name: 'Simone Biles', country: 'USA', sport: 'Gymnastics', event: 'All-Around', medal_type: 'Gold', year: 2016 },
-      { athlete_name: 'Serena Williams', country: 'USA', sport: 'Tennis', event: 'Singles', medal_type: 'Gold', year: 2012 },
-      { athlete_name: 'Lionel Messi', country: 'Argentina', sport: 'Football', event: 'Team', medal_type: 'Gold', year: 2008 }
-    ],
-    results: [
-      { athlete_name: 'Michael Phelps', country: 'USA', sport: 'Swimming', event: '100m Butterfly', position: 1, year: 2008 },
-      { athlete_name: 'Usain Bolt', country: 'Jamaica', sport: 'Athletics', event: '100m', position: 1, year: 2008 },
-      { athlete_name: 'Simone Biles', country: 'USA', sport: 'Gymnastics', event: 'All-Around', position: 1, year: 2016 },
-      { athlete_name: 'Serena Williams', country: 'USA', sport: 'Tennis', event: 'Singles', position: 1, year: 2012 },
-      { athlete_name: 'Lionel Messi', country: 'Argentina', sport: 'Football', event: 'Team', position: 1, year: 2008 }
-    ],
-    hosts: [
-      { city: 'Beijing', country: 'China', year: 2008, season: 'Summer', participating_countries: 204 },
-      { city: 'London', country: 'UK', year: 2012, season: 'Summer', participating_countries: 204 },
-      { city: 'Rio de Janeiro', country: 'Brazil', year: 2016, season: 'Summer', participating_countries: 207 },
-      { city: 'Tokyo', country: 'Japan', year: 2020, season: 'Summer', participating_countries: 206 },
-      { city: 'Vancouver', country: 'Canada', year: 2010, season: 'Winter', participating_countries: 82 }
-    ]
-  };
+  // No demo data - only use real backend data
 
-  // Configuration des filtres par type de données
+  // Configuration des filtres par type de données - basés sur les colonnes principales
   const filterConfigs = {
     athletes: {
-      country: { type: 'select', label: 'Pays', options: ['USA', 'Jamaica', 'China', 'UK', 'Brazil', 'Japan', 'Canada'] },
-      sport: { type: 'select', label: 'Sport', options: ['Swimming', 'Athletics', 'Gymnastics', 'Tennis', 'Football'] },
-      year: { type: 'range', label: 'Année', min: 2000, max: 2020 },
-      gender: { type: 'select', label: 'Genre', options: ['M', 'F'] }
+      athlete_full_name: { type: 'text', label: 'Nom Complet' },
+      athlete_year_birth: { type: 'range', label: 'Année Naissance', min: 1850, max: 2010 },
+      games_participations: { type: 'range', label: 'Participations', min: 1, max: 20 },
+      first_game: { type: 'text', label: 'Premier Jeu' }
     },
     medals: {
-      country: { type: 'select', label: 'Pays', options: ['USA', 'Jamaica', 'China', 'UK', 'Brazil', 'Japan', 'Canada'] },
-      medal_type: { type: 'select', label: 'Type de Médaille', options: ['Gold', 'Silver', 'Bronze'] },
-      year: { type: 'range', label: 'Année', min: 2000, max: 2020 },
-      sport: { type: 'select', label: 'Sport', options: ['Swimming', 'Athletics', 'Gymnastics', 'Tennis', 'Football'] }
+      year: { type: 'range', label: 'Année', min: 1896, max: 2024 },
+      sport: { type: 'text', label: 'Sport' },
+      event: { type: 'text', label: 'Événement' },
+      event_gender: { type: 'select', label: 'Genre', options: ['Men', 'Women', 'Mixed'] },
+      noc: { type: 'text', label: 'NOC' },
+      country: { type: 'text', label: 'Pays' },
+      medal: { type: 'select', label: 'Médaille', options: ['GOLD', 'SILVER', 'BRONZE'] },
+      award_count: { type: 'range', label: 'Nombre', min: 1, max: 100 }
     },
     results: {
-      country: { type: 'select', label: 'Pays', options: ['USA', 'Jamaica', 'China', 'UK', 'Brazil', 'Japan', 'Canada'] },
-      sport: { type: 'select', label: 'Sport', options: ['Swimming', 'Athletics', 'Gymnastics', 'Tennis', 'Football'] },
-      year: { type: 'range', label: 'Année', min: 2000, max: 2020 },
-      season: { type: 'select', label: 'Saison', options: ['Summer', 'Winter'] }
+      year: { type: 'range', label: 'Année', min: 1896, max: 2024 },
+      games_slug: { type: 'text', label: 'Jeux' },
+      sport: { type: 'text', label: 'Sport' },
+      event: { type: 'text', label: 'Événement' },
+      event_gender: { type: 'select', label: 'Genre', options: ['Men', 'Women', 'Mixed'] },
+      participant_type: { type: 'text', label: 'Type' },
+      participant_title: { type: 'text', label: 'Titre' },
+      athlete: { type: 'text', label: 'Athlète' }
     },
     hosts: {
-      country: { type: 'select', label: 'Pays', options: ['China', 'UK', 'Brazil', 'Japan', 'Canada'] },
-      year: { type: 'range', label: 'Année', min: 2000, max: 2020 },
-      season: { type: 'select', label: 'Saison', options: ['Summer', 'Winter'] }
+      year: { type: 'range', label: 'Année', min: 1896, max: 2024 },
+      season: { type: 'select', label: 'Saison', options: ['Summer', 'Winter'] },
+      city: { type: 'text', label: 'Ville' },
+      country: { type: 'text', label: 'Pays' },
+      slug: { type: 'text', label: 'Slug' },
+      name: { type: 'text', label: 'Nom' },
+      start_date: { type: 'date', label: 'Date Début' },
+      end_date: { type: 'date', label: 'Date Fin' }
     }
   };
 
-  // Tester la connexion backend
-  const testConnection = async () => {
-    const result = await testBackendConnection();
-    setConnectionStatus(result);
-    return result.connected;
-  };
 
   // Charger les données
   const loadData = async () => {
@@ -89,23 +63,39 @@ const DataViewer = ({ dataSource, onClose }) => {
     setError(null);
     
     try {
-      // Tester la connexion d'abord
-      const isConnected = await testConnection();
-      
-      if (!isConnected) {
-        throw new Error('Backend non accessible. Utilisation des données de démonstration.');
-      }
       let response;
+      
+      // Construire les paramètres de filtrage
       const params = {
-        ...filters,
         page: currentPage,
         limit: itemsPerPage,
-        search: searchTerm,
         sort_by: sortBy,
         sort_order: sortOrder
       };
 
-      console.log('Tentative de chargement des données pour:', dataSource.id, 'avec params:', params);
+      // Ajouter les filtres seulement s'ils ont des valeurs
+      Object.keys(filters).forEach(key => {
+        const value = filters[key];
+        if (value !== '' && value !== null && value !== undefined) {
+          // Gérer les filtres de type range (min/max)
+          if (key.includes('_min')) {
+            const baseKey = key.replace('_min', '');
+            if (!params[baseKey]) params[baseKey] = {};
+            params[baseKey].min = value;
+          } else if (key.includes('_max')) {
+            const baseKey = key.replace('_max', '');
+            if (!params[baseKey]) params[baseKey] = {};
+            params[baseKey].max = value;
+          } else {
+            // Filtres normaux
+            params[key] = value;
+          }
+        }
+      });
+
+      console.log('Chargement des données pour:', dataSource.id);
+      console.log('Filtres actuels:', filters);
+      console.log('Paramètres envoyés:', params);
 
       switch (dataSource.id) {
         case 'athletes':
@@ -130,19 +120,15 @@ const DataViewer = ({ dataSource, onClose }) => {
       const responseData = response.data;
       if (responseData && responseData.status === 'success') {
         setData(responseData.data || []);
-        setTotalPages(Math.ceil((responseData.total || responseData.data?.length || 0) / itemsPerPage));
+        setTotalPages(responseData.total_pages || Math.ceil((responseData.total || responseData.data?.length || 0) / itemsPerPage));
       } else {
         throw new Error(responseData?.message || 'Erreur lors du chargement des données');
       }
     } catch (err) {
       console.error('Erreur lors du chargement:', err);
-      
-      // En cas d'erreur, utiliser les données de démonstration
-      console.log('Utilisation des données de démonstration pour:', dataSource.id);
-      const demoDataForSource = demoData[dataSource.id] || [];
-      setData(demoDataForSource);
+      setError(`Erreur de connexion: ${err.message}. Vérifiez que le backend est démarré.`);
+      setData([]);
       setTotalPages(1);
-      setError(`Mode démonstration: ${err.message}. Les données affichées sont des exemples.`);
     } finally {
       setLoading(false);
     }
@@ -152,22 +138,27 @@ const DataViewer = ({ dataSource, onClose }) => {
     if (dataSource) {
       loadData();
     }
-  }, [dataSource, currentPage, filters, searchTerm, sortBy, sortOrder]);
+  }, [dataSource, currentPage, sortBy, sortOrder]);
 
   const handleFilterChange = (filterKey, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterKey]: value
-    }));
+    setFilters(prev => {
+      const newFilters = {
+        ...prev,
+        [filterKey]: value
+      };
+      console.log('Filter changed:', filterKey, value, 'New filters:', newFilters);
+      return newFilters;
+    });
     setCurrentPage(1);
   };
 
   const clearFilters = () => {
     setFilters({});
-    setSearchTerm('');
     setSortBy('');
     setSortOrder('asc');
     setCurrentPage(1);
+    // Reload data with cleared filters
+    loadData();
   };
 
   const handleSort = (field) => {
@@ -181,10 +172,10 @@ const DataViewer = ({ dataSource, onClose }) => {
 
   const renderTableHeader = () => {
     const headers = {
-      athletes: ['Nom', 'Pays', 'Sport', 'Année', 'Genre', 'Âge'],
-      medals: ['Athlète', 'Pays', 'Sport', 'Événement', 'Médaille', 'Année'],
-      results: ['Athlète', 'Pays', 'Sport', 'Événement', 'Position', 'Année'],
-      hosts: ['Ville', 'Pays', 'Année', 'Saison', 'Pays Participants']
+      athletes: ['Nom Complet', 'URL', 'Année Naissance', 'Participations', 'Premier Jeu', 'Première Année', 'Médailles Total', 'Bio'],
+      medals: ['Année', 'Sport', 'Événement', 'Genre', 'NOC', 'Pays', 'Médaille', 'Nombre'],
+      results: ['Année', 'Jeux', 'Sport', 'Événement', 'Genre', 'Type', 'Titre', 'Athlète', 'URL', 'Pays', 'Code', 'NOC', 'Médaille', 'Or', 'Argent', 'Bronze', 'Équipe', 'Créé'],
+      hosts: ['Année', 'Saison', 'Ville', 'Pays', 'Slug', 'Nom', 'Date Début', 'Date Fin', 'Durée (jours)']
     };
 
     return headers[dataSource.id]?.map((header, index) => (
@@ -208,48 +199,86 @@ const DataViewer = ({ dataSource, onClose }) => {
       case 'athletes':
         return (
           <tr key={index}>
-            <td>{item.name || 'N/A'}</td>
-            <td>{item.country || 'N/A'}</td>
-            <td>{item.sport || 'N/A'}</td>
-            <td>{item.year || 'N/A'}</td>
-            <td>{item.gender || 'N/A'}</td>
-            <td>{item.age || 'N/A'}</td>
+            <td>{item.athlete_full_name || 'N/A'}</td>
+            <td>
+              {item.athlete_url ? (
+                <a href={item.athlete_url} target="_blank" rel="noopener noreferrer" style={{color: '#3b82f6', textDecoration: 'none'}}>
+                  Lien
+                </a>
+              ) : 'N/A'}
+            </td>
+            <td>{item.athlete_year_birth || 'N/A'}</td>
+            <td>{item.games_participations || 'N/A'}</td>
+            <td>{item.first_game || 'N/A'}</td>
+            <td>{item.first_year || 'N/A'}</td>
+            <td>{item.medal_total || 'N/A'}</td>
+            <td style={{maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+              {item.bio || 'N/A'}
+            </td>
           </tr>
         );
       case 'medals':
         return (
           <tr key={index}>
-            <td>{item.athlete_name || 'N/A'}</td>
-            <td>{item.country || 'N/A'}</td>
+            <td>{item.year || 'N/A'}</td>
             <td>{item.sport || 'N/A'}</td>
             <td>{item.event || 'N/A'}</td>
+            <td>{item.event_gender || 'N/A'}</td>
+            <td>{item.noc || 'N/A'}</td>
+            <td>{item.country || 'N/A'}</td>
             <td>
-              <span className={`medal-badge ${item.medal_type?.toLowerCase()}`}>
-                {item.medal_type || 'N/A'}
+              <span className={`medal-badge ${item.medal?.toLowerCase()}`}>
+                {item.medal || 'N/A'}
               </span>
             </td>
-            <td>{item.year || 'N/A'}</td>
+            <td>{item.award_count || 'N/A'}</td>
           </tr>
         );
       case 'results':
         return (
           <tr key={index}>
-            <td>{item.athlete_name || 'N/A'}</td>
-            <td>{item.country || 'N/A'}</td>
+            <td>{item.year || 'N/A'}</td>
+            <td>{item.games_slug || 'N/A'}</td>
             <td>{item.sport || 'N/A'}</td>
             <td>{item.event || 'N/A'}</td>
-            <td>{item.position || 'N/A'}</td>
-            <td>{item.year || 'N/A'}</td>
+            <td>{item.event_gender || 'N/A'}</td>
+            <td>{item.participant_type || 'N/A'}</td>
+            <td>{item.participant_title || 'N/A'}</td>
+            <td>{item.athlete || 'N/A'}</td>
+            <td>
+              {item.athlete_url ? (
+                <a href={item.athlete_url} target="_blank" rel="noopener noreferrer" style={{color: '#3b82f6', textDecoration: 'none'}}>
+                  Lien
+                </a>
+              ) : 'N/A'}
+            </td>
+            <td>{item.country || 'N/A'}</td>
+            <td>{item.country_code || 'N/A'}</td>
+            <td>{item.noc || 'N/A'}</td>
+            <td>
+              <span className={`medal-badge ${item.medal?.toLowerCase()}`}>
+                {item.medal || 'N/A'}
+              </span>
+            </td>
+            <td>{item.gold ? 'Oui' : 'Non'}</td>
+            <td>{item.silver ? 'Oui' : 'Non'}</td>
+            <td>{item.bronze ? 'Oui' : 'Non'}</td>
+            <td>{item.is_team ? 'Oui' : 'Non'}</td>
+            <td>{item.created_at ? new Date(item.created_at).toLocaleDateString() : 'N/A'}</td>
           </tr>
         );
       case 'hosts':
         return (
           <tr key={index}>
-            <td>{item.city || 'N/A'}</td>
-            <td>{item.country || 'N/A'}</td>
             <td>{item.year || 'N/A'}</td>
             <td>{item.season || 'N/A'}</td>
-            <td>{item.participating_countries || 'N/A'}</td>
+            <td>{item.city || 'N/A'}</td>
+            <td>{item.country || 'N/A'}</td>
+            <td>{item.slug || 'N/A'}</td>
+            <td>{item.name || 'N/A'}</td>
+            <td>{item.start_date || 'N/A'}</td>
+            <td>{item.end_date || 'N/A'}</td>
+            <td>{item.duration_days || 'N/A'}</td>
           </tr>
         );
       default:
@@ -293,6 +322,19 @@ const DataViewer = ({ dataSource, onClose }) => {
               onChange={(e) => handleFilterChange(`${key}_max`, e.target.value)}
             />
           </div>
+        ) : config.type === 'text' ? (
+          <input
+            type="text"
+            placeholder={`Rechercher ${config.label.toLowerCase()}`}
+            value={filters[key] || ''}
+            onChange={(e) => handleFilterChange(key, e.target.value)}
+          />
+        ) : config.type === 'date' ? (
+          <input
+            type="date"
+            value={filters[key] || ''}
+            onChange={(e) => handleFilterChange(key, e.target.value)}
+          />
         ) : null}
       </div>
     ));
@@ -301,15 +343,23 @@ const DataViewer = ({ dataSource, onClose }) => {
   return (
     <div className="data-viewer">
       <div className="viewer-header">
-        <h2>Données: {dataSource.title}</h2>
+        <div className="header-info">
+          <h2>Données: {dataSource.title}</h2>
+          <p className="data-description">{dataSource.description}</p>
+          {data.length > 0 && (
+            <div className="data-stats">
+              <span className="stat-item">
+                📊 {data.length} enregistrement{data.length > 1 ? 's' : ''} affiché{data.length > 1 ? 's' : ''}
+              </span>
+              {totalPages > 1 && (
+                <span className="stat-item">
+                  📄 Page {currentPage} sur {totalPages}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
         <div className="header-actions">
-          <button 
-            className="btn btn-outline" 
-            onClick={testConnection}
-            title="Tester la connexion backend"
-          >
-            🔍 Test Connexion
-          </button>
           <button className="btn btn-secondary" onClick={onClose}>
             Fermer
           </button>
@@ -318,46 +368,65 @@ const DataViewer = ({ dataSource, onClose }) => {
 
       {error && (
         <div className="error-banner">
-          <strong>⚠️ Mode Démonstration:</strong> {error}
+          <strong>⚠️ Erreur de Connexion:</strong> {error}
+          <div style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
+            <strong>Solutions:</strong>
+            <ul style={{ margin: '0.5rem 0 0 1rem', padding: 0 }}>
+              <li>Vérifiez que le backend Flask est démarré sur le port 5000</li>
+              <li>Assurez-vous que la base de données Supabase est accessible</li>
+              <li>Vérifiez la configuration de l'API dans les variables d'environnement</li>
+            </ul>
+          </div>
         </div>
       )}
 
       <div className="viewer-controls">
-        <div className="search-section">
-          <input
-            type="text"
-            placeholder="Rechercher..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-          />
-        </div>
-
         <div className="filters-section">
-          {renderFilters()}
-          <button className="btn btn-outline" onClick={clearFilters}>
-            Effacer les filtres
-          </button>
+          <div className="filters-grid">
+            {renderFilters()}
+          </div>
+          <div className="filter-actions">
+            <button className="btn btn-primary" onClick={loadData}>
+              🔍 Appliquer les filtres
+            </button>
+            <button className="btn btn-outline" onClick={clearFilters}>
+              Effacer les filtres
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="data-table-container">
-        {loading ? (
-          <div className="loading">Chargement des données...</div>
-        ) : data.length === 0 ? (
-          <div className="no-data">Aucune donnée trouvée</div>
-        ) : (
-          <>
-            <table className="data-table">
-              <thead>
-                <tr>
-                  {renderTableHeader()}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, index) => renderTableRow(item, index))}
-              </tbody>
-            </table>
+          <div className="data-table-container">
+            {loading ? (
+              <div className="loading">Chargement des données...</div>
+            ) : data.length === 0 ? (
+              <div className="no-data">Aucune donnée trouvée</div>
+            ) : (
+              <>
+                {data.length > 0 && (
+                  <div className="table-stats-bar">
+                    <div className="stats-info">
+                      <span className="record-count">
+                        📊 {data.length} enregistrement{data.length > 1 ? 's' : ''} affiché{data.length > 1 ? 's' : ''}
+                      </span>
+                      {totalPages > 1 && (
+                        <span className="page-count">
+                          📄 Page {currentPage} sur {totalPages}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                <table className={`data-table ${dataSource.id === 'athletes' ? 'athletes-table' : dataSource.id === 'results' ? 'results-table' : dataSource.id === 'hosts' ? 'hosts-table' : dataSource.id === 'medals' ? 'medals-table' : ''}`}>
+                  <thead>
+                    <tr>
+                      {renderTableHeader()}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((item, index) => renderTableRow(item, index))}
+                  </tbody>
+                </table>
 
             <div className="pagination">
               <button
@@ -368,7 +437,7 @@ const DataViewer = ({ dataSource, onClose }) => {
                 Précédent
               </button>
               <span className="page-info">
-                Page {currentPage} sur {totalPages}
+                📄 Page {currentPage} sur {totalPages}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
