@@ -25,10 +25,13 @@ DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "
 CSV_MEDALS = os.path.join(DATA_DIR, "olympic_medals_clean_v2.csv")          # medals by event/athlete
 CSV_RESULTS = os.path.join(DATA_DIR, "olympic_results_clean.csv")            # historical summaries (optional)
 
-MODELS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "models"))
-COUNTRY_MODEL_PATH = os.path.join(MODELS_DIR, "country_medals.joblib")
-TOP25_MODEL_PATH   = os.path.join(MODELS_DIR, "top25_medals.joblib")
-ATHLETE_MODEL_PATH = os.path.join(MODELS_DIR, "athlete_medals.joblib")
+MODELS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'models'))
+COUNTRY_BEST = os.path.join(MODELS_DIR, 'country_best.joblib')
+COUNTRY_SECOND = os.path.join(MODELS_DIR, 'country_second.joblib')
+TOP25_BEST = os.path.join(MODELS_DIR, 'top25_best.joblib')
+TOP25_SECOND = os.path.join(MODELS_DIR, 'top25_second.joblib')
+ATHLETES_BEST = os.path.join(MODELS_DIR, 'athletes_best.joblib')
+ATHLETES_SECOND = os.path.join(MODELS_DIR, 'athletes_second.joblib')
 
 
 def _safe_read_csv(path: str):
@@ -49,23 +52,81 @@ def _clamp_nonneg(d: Dict[str, Any]):
     return d
 
 
+def _historical_props(df, country_name):
+    """Return historical proportions (gold, silver, bronze) for a country from df."""
+    if df is None or df.empty:
+        return (1/3, 1/3, 1/3)
+    try:
+        df_country = df[df['country'].str.lower() == country_name.lower()]
+        if df_country.empty:
+            return (1/3, 1/3, 1/3)
+        sums = df_country[['gold', 'silver', 'bronze']].sum()
+        total = sums.sum()
+        if total == 0:
+            return (1/3, 1/3, 1/3)
+        return (sums['gold']/total, sums['silver']/total, sums['bronze']/total)
+    except Exception:
+        return (1/3, 1/3, 1/3)
+
+
 class PredictionService:
     """Public methods called by routes."""
+
+    # cache loaded models
+    _models: Dict[str, Any] = {}
+
+    @classmethod
+    def _load_models(cls):
+        if cls._models:
+            return
+        if joblib is None:
+            cls._models = {
+                'country_best': None, 'country_second': None,
+                'top25_best': None, 'top25_second': None,
+                'athletes_best': None, 'athletes_second': None,
+            }
+            return
+        def _safe_load(path):
+            try:
+                if os.path.exists(path):
+                    return joblib.load(path)
+            except Exception:
+                return None
+            return None
+
+        cls._models = {
+            'country_best': _safe_load(COUNTRY_BEST),
+            'country_second': _safe_load(COUNTRY_SECOND),
+            'top25_best': _safe_load(TOP25_BEST),
+            'top25_second': _safe_load(TOP25_SECOND),
+            'athletes_best': _safe_load(ATHLETES_BEST),
+            'athletes_second': _safe_load(ATHLETES_SECOND),
+        }
 
     # --------------------- COUNTRY ---------------------
 
     @staticmethod
     def predict_country_medals(country: str = "France", year: int = 2024, model: str = "ma") -> Dict[str, int]:
-        # 1) joblib model if available
-        if joblib and os.path.exists(COUNTRY_MODEL_PATH):
-            try:
-                model_obj = joblib.load(COUNTRY_MODEL_PATH)
-                preds = model_obj.predict([[country, year]])
-                out = {"country": country, "year": year,
-                       "gold": int(preds[0][0]), "silver": int(preds[0][1]), "bronze": int(preds[0][2])}
-                return _clamp_nonneg(out)
-            except Exception:
-                pass
+        # 1) try pipeline models in webapp/backend/models
+        if joblib:
+            if os.path.exists(COUNTRY_BEST):
+                try:
+                    m = joblib.load(COUNTRY_BEST)
+                    pipeline = m['model'] if isinstance(m, dict) and 'model' in m else m
+                    X_row = pd.DataFrame([{'country': country, 'year': int(year), 'prev_total': 0, 'mean_prev_3': 0}])
+                    preds = pipeline.predict(X_row)
+                    total = max(0, float(preds[0]))
+                    g_prop, s_prop, b_prop = (1/3, 1/3, 1/3)
+                    try:
+                        g_prop, s_prop, b_prop = _historical_props(_safe_read_csv(CSV_MEDALS), country)
+                    except Exception:
+                        pass
+                    gold = int(round(total * g_prop))
+                    silver = int(round(total * s_prop))
+                    bronze = int(round(total * b_prop))
+                    return _clamp_nonneg({'country': country, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze})
+                except Exception:
+                    pass
 
         df = _safe_read_csv(CSV_MEDALS)
         if df is None:
@@ -127,15 +188,39 @@ class PredictionService:
         """
         Return list of dicts: [{country, gold, silver, bronze, total}, ...] length == top_n
         """
-        # joblib model first
-        if joblib and os.path.exists(TOP25_MODEL_PATH):
-            try:
-                model_obj = joblib.load(TOP25_MODEL_PATH)
-                preds = model_obj.predict([[year]])  # adjust if model expects more features
-                # assume preds is a list of dicts already
-                return [_clamp_nonneg(x) for x in preds][:top_n]
-            except Exception:
-                pass
+        # Try model-based top25
+        if joblib:
+            topm = None
+            if os.path.exists(TOP25_BEST):
+                try:
+                    topm = joblib.load(TOP25_BEST)
+                except Exception:
+                    topm = None
+            if topm is None and os.path.exists(TOP25_SECOND):
+                try:
+                    topm = joblib.load(TOP25_SECOND)
+                except Exception:
+                    topm = None
+            if topm is not None:
+                try:
+                    pipeline = topm['model'] if isinstance(topm, dict) and 'model' in topm else topm
+                    countries = pd.Series(df['country'].unique())
+                    X = pd.DataFrame({'country': countries, 'year': year})
+                    preds = pipeline.predict(X)
+                    df_out = pd.DataFrame({'country': countries, 'total': preds})
+                    df_out = df_out.sort_values('total', ascending=False).head(top_n)
+                    results = []
+                    for _, r in df_out.iterrows():
+                        c = r['country']
+                        total = max(0, int(round(float(r['total']))))
+                        g_prop, s_prop, b_prop = _historical_props(df, c)
+                        gold = int(round(total * g_prop))
+                        silver = int(round(total * s_prop))
+                        bronze = int(round(total * b_prop))
+                        results.append({'country': c, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze, 'note': 'model_top'})
+                    return results
+                except Exception:
+                    pass
 
         df = _safe_read_csv(CSV_MEDALS)
         if df is None:
