@@ -157,25 +157,104 @@ class PredictionService:
  
     @staticmethod
     def predict_country_medals(country: str = "France", year: int = 2024, model: str = "ma") -> Dict[str, int]:
-        # 1) try pipeline models in webapp/backend/models
+        # 1) try enhanced ML models in webapp/backend/models
         if joblib:
             if os.path.exists(COUNTRY_BEST):
                 try:
-                    m = joblib.load(COUNTRY_BEST)
-                    pipeline = m['model'] if isinstance(m, dict) and 'model' in m else m
-                    X_row = pd.DataFrame([{'country': country, 'year': int(year), 'prev_total': 0, 'mean_prev_3': 0}])
-                    preds = pipeline.predict(X_row)
-                    total = max(0, float(preds[0]))
-                    g_prop, s_prop, b_prop = (1/3, 1/3, 1/3)
-                    try:
-                        g_prop, s_prop, b_prop = _historical_props(_safe_read_csv(CSV_MEDALS), country)
-                    except Exception:
-                        pass
-                    gold = int(round(total * g_prop))
-                    silver = int(round(total * s_prop))
-                    bronze = int(round(total * b_prop))
-                    return _clamp_nonneg({'country': country, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze})
-                except Exception:
+                    model_data = joblib.load(COUNTRY_BEST)
+                    if isinstance(model_data, dict) and 'model' in model_data and 'scaler' in model_data:
+                        # Enhanced ML model
+                        ml_model = model_data['model']
+                        scaler = model_data['scaler']
+                        feature_columns = model_data.get('feature_columns', [])
+                        
+                        # Country mapping for consistency
+                        country_mapping = {
+                            'France': 'France', 'United States of America': 'USA', 'USA': 'USA',
+                            'China': 'China', 'People\'s Republic of China': 'China',
+                            'Great Britain': 'Great Britain', 'Germany': 'Germany',
+                            'Japan': 'Japan', 'Italy': 'Italy', 'Australia': 'Australia',
+                            'Canada': 'Canada', 'Russia': 'Russia', 'Russian Federation': 'Russia'
+                        }
+                        
+                        mapped_country = country_mapping.get(country, country)
+                        
+                        # Country-specific factors
+                        country_factors = {
+                            'USA': {'population': 331000000, 'gdp_per_capita': 65000, 'sports_culture': 0.9, 'olympic_tradition': 0.95},
+                            'China': {'population': 1400000000, 'gdp_per_capita': 10000, 'sports_culture': 0.8, 'olympic_tradition': 0.7},
+                            'Great Britain': {'population': 67000000, 'gdp_per_capita': 45000, 'sports_culture': 0.85, 'olympic_tradition': 0.9},
+                            'France': {'population': 67000000, 'gdp_per_capita': 40000, 'sports_culture': 0.8, 'olympic_tradition': 0.85},
+                            'Germany': {'population': 83000000, 'gdp_per_capita': 50000, 'sports_culture': 0.85, 'olympic_tradition': 0.9},
+                            'Japan': {'population': 125000000, 'gdp_per_capita': 40000, 'sports_culture': 0.75, 'olympic_tradition': 0.8},
+                            'Italy': {'population': 60000000, 'gdp_per_capita': 35000, 'sports_culture': 0.8, 'olympic_tradition': 0.85},
+                            'Australia': {'population': 25000000, 'gdp_per_capita': 55000, 'sports_culture': 0.9, 'olympic_tradition': 0.8},
+                            'Canada': {'population': 38000000, 'gdp_per_capita': 45000, 'sports_culture': 0.8, 'olympic_tradition': 0.75},
+                            'Russia': {'population': 145000000, 'gdp_per_capita': 12000, 'sports_culture': 0.85, 'olympic_tradition': 0.9}
+                        }
+                        
+                        factors = country_factors.get(mapped_country, {
+                            'population': 50000000, 'gdp_per_capita': 20000, 
+                            'sports_culture': 0.5, 'olympic_tradition': 0.5
+                        })
+                        
+                        # Create feature vector for prediction
+                        features = {
+                            'avg_recent_3': 0, 'trend': 0, 'consistency': 0, 'peak_performance': 0,
+                            'years_since_last': 4, 'population': factors['population'],
+                            'gdp_per_capita': factors['gdp_per_capita'],
+                            'sports_culture': factors['sports_culture'],
+                            'olympic_tradition': factors['olympic_tradition'],
+                            'is_host': 1 if mapped_country == 'France' else 0,
+                            'is_summer': 1, 'year_normalized': (year - 1990) / 30
+                        }
+                        
+                        # Convert to array and scale
+                        import numpy as np
+                        feature_array = np.array([features[col] for col in feature_columns]).reshape(1, -1)
+                        feature_array_scaled = scaler.transform(feature_array)
+                        
+                        # Make prediction
+                        predicted_total = max(0, ml_model.predict(feature_array_scaled)[0])
+                        
+                        # Distribute medals based on country-specific ratios
+                        if mapped_country in ['USA', 'China', 'Germany']:
+                            gold_ratio, silver_ratio, bronze_ratio = 0.5, 0.3, 0.2
+                        elif mapped_country in ['France', 'Great Britain', 'Japan']:
+                            gold_ratio, silver_ratio, bronze_ratio = 0.4, 0.35, 0.25
+                        else:
+                            gold_ratio, silver_ratio, bronze_ratio = 0.4, 0.3, 0.3
+                        
+                        gold = int(round(predicted_total * gold_ratio))
+                        silver = int(round(predicted_total * silver_ratio))
+                        bronze = int(round(predicted_total * bronze_ratio))
+                        
+                        # Ensure total matches
+                        total = gold + silver + bronze
+                        if total != int(round(predicted_total)):
+                            bronze += int(round(predicted_total)) - total
+                        
+                        return _clamp_nonneg({
+                            'country': country, 'year': year, 
+                            'gold': max(0, gold), 'silver': max(0, silver), 'bronze': max(0, bronze)
+                        })
+                    else:
+                        # Legacy model format
+                        pipeline = model_data['model'] if isinstance(model_data, dict) and 'model' in model_data else model_data
+                        X_row = pd.DataFrame([{'country': country, 'year': int(year), 'prev_total': 0, 'mean_prev_3': 0}])
+                        preds = pipeline.predict(X_row)
+                        total = max(0, float(preds[0]))
+                        g_prop, s_prop, b_prop = (1/3, 1/3, 1/3)
+                        try:
+                            g_prop, s_prop, b_prop = _historical_props(_safe_read_csv(CSV_MEDALS), country)
+                        except Exception:
+                            pass
+                        gold = int(round(total * g_prop))
+                        silver = int(round(total * s_prop))
+                        bronze = int(round(total * b_prop))
+                        return _clamp_nonneg({'country': country, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze})
+                except Exception as e:
+                    print(f"Error using enhanced model: {e}")
                     pass
  
         df = _safe_read_csv(CSV_MEDALS)
@@ -243,31 +322,106 @@ class PredictionService:
         df = _safe_read_csv(CSV_MEDALS)
         df = _clean_medals_df(df)
  
-        # Try model-based top25 when a trained pipeline is available and caller requested it
+        # Try enhanced ML model-based top25 when available
         if model in ("best", "second"):
             try:
-                # ensure models cache is loaded
-                PredictionService._load_models()
-                topm = PredictionService._models.get(f"top25_{model}")
-                if topm is not None and isinstance(topm, dict) and topm.get('model') is not None:
-                    pipeline = topm['model']
-                    if df is not None and 'country' in df.columns:
-                        countries = pd.Series(df['country'].dropna().unique())
-                        X = pd.DataFrame({'country': countries, 'year': [int(year)] * len(countries)})
-                        preds = pipeline.predict(X)
-                        df_out = pd.DataFrame({'country': countries, 'total': preds})
-                        df_out = df_out.sort_values('total', ascending=False).head(top_n)
+                # Load enhanced model directly
+                if os.path.exists(TOP25_BEST):
+                    model_data = joblib.load(TOP25_BEST)
+                    if isinstance(model_data, dict) and 'model' in model_data and 'scaler' in model_data:
+                        ml_model = model_data['model']
+                        scaler = model_data['scaler']
+                        feature_columns = model_data.get('feature_columns', [])
+                        
+                        # Country factors for prediction
+                        country_factors = {
+                            'USA': {'population': 331000000, 'gdp_per_capita': 65000, 'sports_culture': 0.9, 'olympic_tradition': 0.95},
+                            'China': {'population': 1400000000, 'gdp_per_capita': 10000, 'sports_culture': 0.8, 'olympic_tradition': 0.7},
+                            'Great Britain': {'population': 67000000, 'gdp_per_capita': 45000, 'sports_culture': 0.85, 'olympic_tradition': 0.9},
+                            'France': {'population': 67000000, 'gdp_per_capita': 40000, 'sports_culture': 0.8, 'olympic_tradition': 0.85},
+                            'Germany': {'population': 83000000, 'gdp_per_capita': 50000, 'sports_culture': 0.85, 'olympic_tradition': 0.9},
+                            'Japan': {'population': 125000000, 'gdp_per_capita': 40000, 'sports_culture': 0.75, 'olympic_tradition': 0.8},
+                            'Italy': {'population': 60000000, 'gdp_per_capita': 35000, 'sports_culture': 0.8, 'olympic_tradition': 0.85},
+                            'Australia': {'population': 25000000, 'gdp_per_capita': 55000, 'sports_culture': 0.9, 'olympic_tradition': 0.8},
+                            'Canada': {'population': 38000000, 'gdp_per_capita': 45000, 'sports_culture': 0.8, 'olympic_tradition': 0.75},
+                            'Russia': {'population': 145000000, 'gdp_per_capita': 12000, 'sports_culture': 0.85, 'olympic_tradition': 0.9},
+                            'Norway': {'population': 5000000, 'gdp_per_capita': 75000, 'sports_culture': 0.9, 'olympic_tradition': 0.8},
+                            'Sweden': {'population': 10000000, 'gdp_per_capita': 55000, 'sports_culture': 0.8, 'olympic_tradition': 0.8},
+                            'Netherlands': {'population': 17000000, 'gdp_per_capita': 55000, 'sports_culture': 0.8, 'olympic_tradition': 0.75},
+                            'South Korea': {'population': 51000000, 'gdp_per_capita': 30000, 'sports_culture': 0.8, 'olympic_tradition': 0.7},
+                            'Spain': {'population': 47000000, 'gdp_per_capita': 30000, 'sports_culture': 0.75, 'olympic_tradition': 0.7},
+                            'Brazil': {'population': 210000000, 'gdp_per_capita': 8000, 'sports_culture': 0.8, 'olympic_tradition': 0.6}
+                        }
+                        
                         results = []
-                        for _, r in df_out.iterrows():
-                            c = r['country']
-                            total = max(0, int(round(float(r['total']))))
-                            g_prop, s_prop, b_prop = _historical_props(df, c)
-                            gold = int(round(total * g_prop))
-                            silver = int(round(total * s_prop))
-                            bronze = int(round(total * b_prop))
-                            results.append({'country': c, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze, 'note': 'model_top'})
-                        return results
-            except Exception:
+                        import numpy as np
+                        
+                        for country, factors in country_factors.items():
+                            # Create feature vector for prediction
+                            features = {
+                                'avg_recent_3': 0, 'trend': 0, 'consistency': 0, 'peak_performance': 0,
+                                'years_since_last': 4, 'population': factors['population'],
+                                'gdp_per_capita': factors['gdp_per_capita'],
+                                'sports_culture': factors['sports_culture'],
+                                'olympic_tradition': factors['olympic_tradition'],
+                                'is_host': 1 if country == 'France' else 0,
+                                'is_summer': 1, 'year_normalized': (year - 1990) / 30
+                            }
+                            
+                            # Convert to array and scale
+                            feature_array = np.array([features[col] for col in feature_columns]).reshape(1, -1)
+                            feature_array_scaled = scaler.transform(feature_array)
+                            
+                            # Make prediction
+                            predicted_total = max(0, ml_model.predict(feature_array_scaled)[0])
+                            
+                            # Distribute medals based on country-specific ratios
+                            if country in ['USA', 'China', 'Germany']:
+                                gold_ratio, silver_ratio, bronze_ratio = 0.5, 0.3, 0.2
+                            elif country in ['France', 'Great Britain', 'Japan']:
+                                gold_ratio, silver_ratio, bronze_ratio = 0.4, 0.35, 0.25
+                            else:
+                                gold_ratio, silver_ratio, bronze_ratio = 0.4, 0.3, 0.3
+                            
+                            gold = int(round(predicted_total * gold_ratio))
+                            silver = int(round(predicted_total * silver_ratio))
+                            bronze = int(round(predicted_total * bronze_ratio))
+                            
+                            # Ensure total matches
+                            total = gold + silver + bronze
+                            if total != int(round(predicted_total)):
+                                bronze += int(round(predicted_total)) - total
+                            
+                            results.append({
+                                'country': country, 'year': year, 
+                                'gold': max(0, gold), 'silver': max(0, silver), 'bronze': max(0, bronze),
+                                'total': max(0, gold + silver + bronze)
+                            })
+                        
+                        # Sort by total and return top N
+                        results.sort(key=lambda x: x['total'], reverse=True)
+                        return results[:top_n]
+                    else:
+                        # Legacy model format
+                        pipeline = model_data['model'] if isinstance(model_data, dict) and 'model' in model_data else model_data
+                        if df is not None and 'country' in df.columns:
+                            countries = pd.Series(df['country'].dropna().unique())
+                            X = pd.DataFrame({'country': countries, 'year': [int(year)] * len(countries)})
+                            preds = pipeline.predict(X)
+                            df_out = pd.DataFrame({'country': countries, 'total': preds})
+                            df_out = df_out.sort_values('total', ascending=False).head(top_n)
+                            results = []
+                            for _, r in df_out.iterrows():
+                                c = r['country']
+                                total = max(0, int(round(float(r['total']))))
+                                g_prop, s_prop, b_prop = _historical_props(df, c)
+                                gold = int(round(total * g_prop))
+                                silver = int(round(total * s_prop))
+                                bronze = int(round(total * b_prop))
+                                results.append({'country': c, 'year': year, 'gold': gold, 'silver': silver, 'bronze': bronze, 'note': 'model_top'})
+                            return results
+            except Exception as e:
+                print(f"Error using enhanced top25 model: {e}")
                 # fallback to historical aggregation below
                 pass
  
@@ -294,8 +448,24 @@ class PredictionService:
                 gold   = float(sub["gold"].tail(w).mean())
                 silver = float(sub["silver"].tail(w).mean())
                 bronze = float(sub["bronze"].tail(w).mean())
-            rows.append(_clamp_nonneg({"country": country, "gold": gold, "silver": silver, "bronze": bronze}))
- 
+            
+            # Map old country names to modern names
+            country_mapping = {
+                'USSR': 'Russia',
+                'Soviet Union': 'Russia', 
+                'Unified Team': 'Russia',
+                'East Germany': 'Germany',
+                'West Germany': 'Germany',
+                'Yugoslavia': 'Serbia',
+                'Czechoslovakia': 'Czech Republic',
+                'People\'s Republic of China': 'China',
+                'United States of America': 'USA',
+                'Russian Federation': 'Russia'
+            }
+            modern_country = country_mapping.get(country, country)
+            
+            rows.append(_clamp_nonneg({"country": modern_country, "gold": gold, "silver": silver, "bronze": bronze}))
+
         rows.sort(key=lambda r: r["total"], reverse=True)
         return rows[:top_n]
  
@@ -313,6 +483,22 @@ class PredictionService:
                 return None
             agg = df_ath.groupby(["athlete", "country", "sport"] , dropna=False)[["gold", "silver", "bronze"]].sum().reset_index()
             agg["total"] = agg["gold"] + agg["silver"] + agg["bronze"]
+            
+            # Map old country names to modern names
+            country_mapping = {
+                'USSR': 'Russia',
+                'Soviet Union': 'Russia', 
+                'Unified Team': 'Russia',
+                'East Germany': 'Germany',
+                'West Germany': 'Germany',
+                'Yugoslavia': 'Serbia',
+                'Czechoslovakia': 'Czech Republic',
+                'People\'s Republic of China': 'China',
+                'United States of America': 'USA',
+                'Russian Federation': 'Russia'
+            }
+            agg["country"] = agg["country"].map(country_mapping).fillna(agg["country"])
+            
             return agg
  
         # default model param support (best/second or heuristic)
