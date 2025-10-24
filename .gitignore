@@ -83,7 +83,7 @@ ehthumbs.db
 
 # -------- MACHINE LEARNING MODELS --------
 *.pkl
-*.joblib
+!webapp/backend/models/*.joblib
 *.h5
 *.model
 
