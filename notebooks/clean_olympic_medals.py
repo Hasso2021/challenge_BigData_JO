@@ -1,52 +1,90 @@
 # notebooks/clean_olympic_medals.py
+"""
+SCRIPT DE NETTOYAGE DES DONNÉES OLYMPIQUES
+==========================================
+
+Ce script illustre notre pipeline de nettoyage et préparation des données
+pour l'entraînement de nos modèles de prédiction olympique.
+
+OBJECTIFS :
+- Nettoyer les données historiques olympiques (1896-2020)
+- Standardiser les formats et noms de pays
+- Créer des features pour l'entraînement des modèles
+- Préparer les données pour l'analyse et la prédiction
+
+TECHNIQUES UTILISÉES :
+- Normalisation des noms de pays (USSR → Russia)
+- Gestion des données manquantes
+- Feature engineering (tendances, moyennes)
+- Validation de la qualité des données
+"""
+
 import os, re
 from pathlib import Path
 import pandas as pd
 
-# ---------- paths ----------
+# ---------- CONFIGURATION DES CHEMINS ----------
+# Organisation de notre structure de données
 BASE  = Path(__file__).resolve().parent           # .../notebooks
 ROOT  = BASE.parent                               # repo root
-RAW   = ROOT / "data" / "raw"
-CLEAN = ROOT / "data" / "clean"
-CLEAN.mkdir(parents=True, exist_ok=True)
+RAW   = ROOT / "data" / "raw"                    # Données brutes (Excel, CSV)
+CLEAN = ROOT / "data" / "clean"                   # Données nettoyées (prêtes pour ML)
+CLEAN.mkdir(parents=True, exist_ok=True)          # Créer le dossier si nécessaire
 
-xlsx_path   = RAW / "olympic_medals.xlsx"
-hosts_path  = CLEAN / "olympic_hosts.csv"  # created in previous step
-out_clean   = CLEAN / "olympic_medals_clean.csv"
-out_awards  = CLEAN / "olympic_medal_awards.csv"  # optional aggregated view
+# ---------- DÉFINITION DES FICHIERS ----------
+# Fichiers d'entrée et de sortie pour notre pipeline
+xlsx_path   = RAW / "olympic_medals.xlsx"              # Données brutes Excel
+hosts_path  = CLEAN / "olympic_hosts.csv"              # Pays hôtes (nettoyés précédemment)
+out_clean   = CLEAN / "olympic_medals_clean.csv"       # Médailles nettoyées
+out_awards  = CLEAN / "olympic_medal_awards.csv"       # Vue agrégée des médailles
 
+# ---------- VÉRIFICATION DES DONNÉES ----------
 print("Excel path:", xlsx_path, "exists?", xlsx_path.exists())
 if not xlsx_path.exists():
     raise FileNotFoundError(f"Place olympic_medals.xlsx in {RAW}")
 
-# ---------- load medals ----------
+# ---------- CHARGEMENT DES DONNÉES ----------
+# Chargement du fichier Excel principal (données historiques 1896-2020)
 df = pd.read_excel(xlsx_path, sheet_name=0)
 print("Loaded rows:", len(df))
+print("Données chargées :", len(df), "enregistrements d'événements olympiques")
 
-# 1) drop useless index column if present
+# ---------- ÉTAPE 1 : NETTOYAGE DES COLONNES ----------
+# Suppression des colonnes inutiles (index automatiques Excel)
+print("Étape 1 : Nettoyage des colonnes...")
 for junk in ["Unnamed: 0", "unnamed: 0", "index"]:
     if junk in df.columns:
         df = df.drop(columns=[junk])
+        print(f"   Supprimé colonne inutile : {junk}")
 
-# 2) normalize column names
+# ---------- ÉTAPE 2 : NORMALISATION DES NOMS DE COLONNES ----------
+# Standardisation des noms de colonnes (lowercase, underscore)
+print("Étape 2 : Normalisation des noms de colonnes...")
 df.columns = [str(c).strip().lower().replace(" ", "_") for c in df.columns]
+print(f"   Colonnes normalisées : {list(df.columns)}")
 
-# 3) rename to a consistent schema
+# ---------- ÉTAPE 3 : RENOMMAGE POUR UN SCHÉMA COHÉRENT ----------
+# Création d'un schéma de données standardisé pour notre pipeline
+print("Étape 3 : Renommage pour schéma cohérent...")
 rename_map = {
-    "discipline_title": "sport",
-    "event_title": "event",
-    "slug_game": "games_slug",
-    "medal_type": "medal",
-    "country_3_letter_code": "noc",
-    "country_name": "country",
-    "athlete_full_name": "athlete",
+    "discipline_title": "sport",           # Sport/Discipline
+    "event_title": "event",               # Événement spécifique
+    "slug_game": "games_slug",            # Identifiant des Jeux
+    "medal_type": "medal",                # Type de médaille (Gold/Silver/Bronze)
+    "country_3_letter_code": "noc",       # Code pays 3 lettres (FRA, USA, etc.)
+    "country_name": "country",            # Nom du pays
+    "athlete_full_name": "athlete",       # Nom complet de l'athlète
 }
 df = df.rename(columns={k:v for k,v in rename_map.items() if k in df.columns})
+print("   Schéma standardisé appliqué")
 
-# 4) trim & uppercase where needed
+# ---------- ÉTAPE 4 : NETTOYAGE DES VALEURS TEXTUELLES ----------
+# Suppression des espaces et standardisation des chaînes
+print("Étape 4 : Nettoyage des valeurs textuelles...")
 for c in ["sport","event","event_gender","participant_type","participant_title","athlete","country","noc","games_slug","medal"]:
     if c in df.columns:
         df[c] = df[c].astype(str).str.strip()
+print("   Valeurs textuelles nettoyées")
 
 if "noc" in df.columns:
     df["noc"] = df["noc"].str.upper()

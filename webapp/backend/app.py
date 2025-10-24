@@ -70,19 +70,19 @@ def main():
     app = create_app()
     
     print("=" * 60)
-    print("🚀 DEMARRAGE DU SERVEUR FLASK - VERSION ORGANISEE")
+    print("DEMARRAGE DU SERVEUR FLASK - VERSION ORGANISEE")
     print("=" * 60)
-    print(f"📍 Port: {app.config['PORT']}")
-    print(f"🔧 Debug: {app.config['DEBUG']}")
-    print(f"🌐 URL: http://localhost:{app.config['PORT']}")
+    print(f"Port: {app.config['PORT']}")
+    print(f"Debug: {app.config['DEBUG']}")
+    print(f"URL: http://localhost:{app.config['PORT']}")
     print("=" * 60)
     
     # Tester la connexion au démarrage
-    print("🔗 Test de connexion Supabase...")
+    print("Test de connexion Supabase...")
     if test_connection():
-        print("✅ Connexion Supabase établie avec succès!")
+        print("Connexion Supabase etablie avec succes!")
     else:
-        print("❌ Échec de la connexion Supabase")
+        print("Echec de la connexion Supabase")
     
     # print("=" * 60)
     # print("🎯 SERVEUR DEMARRE - Prêt à recevoir des requêtes")
@@ -104,8 +104,8 @@ def main():
             debug=app.config['DEBUG']
         )
     except Exception as e:
-        print(f"❌ Erreur lors du démarrage: {e}")
-        print("🔍 Vérifiez que le port n'est pas déjà utilisé")
+        print(f"Erreur lors du demarrage: {e}")
+        print("Verifiez que le port n'est pas deja utilise")
 
 if __name__ == '__main__':
     main()

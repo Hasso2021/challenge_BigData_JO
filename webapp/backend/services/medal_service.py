@@ -10,6 +10,12 @@ class MedalService:
         try:
             supabase = get_supabase_client()
             
+            if supabase is None:
+                return {
+                    'status': 'error',
+                    'message': 'Client Supabase non initialisé'
+                }
+            
             # Construire la requête de base
             query = supabase.table('m_award').select('*', count='exact')
             
@@ -66,6 +72,13 @@ class MedalService:
         """Récupérer les données de récompenses (table medals)"""
         try:
             supabase = get_supabase_client()
+            
+            if supabase is None:
+                return {
+                    'status': 'error',
+                    'message': 'Client Supabase non initialisé'
+                }
+                
             result = supabase.table('m_award').select('*').execute()
             
             return {
@@ -84,6 +97,12 @@ class MedalService:
         """Calculer les médailles de la France depuis le début des JO"""
         try:
             supabase = get_supabase_client()
+            
+            if supabase is None:
+                return {
+                    'status': 'error',
+                    'message': 'Client Supabase non initialisé'
+                }
             
             # Récupérer toutes les médailles de la France
             result = supabase.table('m_award').select('medal, award_count').eq('noc', 'FRA').execute()
