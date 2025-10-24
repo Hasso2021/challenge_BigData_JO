@@ -14,8 +14,12 @@ if not SUPABASE_KEY:
     print('Please create a .env file with your Supabase key')
     exit(1)
 
-# Créer le client Supabase
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+# Créer le client Supabase avec gestion d'erreur
+try:
+    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+except Exception as e:
+    print(f"Erreur lors de la création du client Supabase: {e}")
+    supabase = None
 
 def get_supabase_client() -> Client:
     """Retourne le client Supabase configuré"""
@@ -24,6 +28,10 @@ def get_supabase_client() -> Client:
 def test_connection() -> bool:
     """Teste la connexion à la base de données Supabase"""
     try:
+        if supabase is None:
+            print('Client Supabase non initialisé')
+            return False
+            
         # Test de connexion avec la table athlete
         result = supabase.table('athlete').select('*').limit(1).execute()
         
@@ -41,6 +49,9 @@ def test_connection() -> bool:
 def get_athletes(limit: int = 100):
     """Récupère les athlètes depuis la base de données"""
     try:
+        if supabase is None:
+            print('Client Supabase non initialisé')
+            return None
         result = supabase.table('athlete').select('*').execute()
         return result.data
     except Exception as error:
@@ -50,6 +61,9 @@ def get_athletes(limit: int = 100):
 def get_medals(limit: int = 100):
     """Récupère les médailles depuis la base de données"""
     try:
+        if supabase is None:
+            print('Client Supabase non initialisé')
+            return None
         result = supabase.table('medal_awards').select('*').execute()
         return result.data
     except Exception as error:
@@ -59,6 +73,9 @@ def get_medals(limit: int = 100):
 def get_hosts(limit: int = 100):
     """Récupère les données des villes hôtes depuis la base de données"""
     try:
+        if supabase is None:
+            print('Client Supabase non initialisé')
+            return None
         result = supabase.table('hosts').select('*').execute()
         return result.data
     except Exception as error:

@@ -10,6 +10,12 @@ class AthleteService:
         try:
             supabase = get_supabase_client()
             
+            if supabase is None:
+                return {
+                    'status': 'error',
+                    'message': 'Client Supabase non initialisé'
+                }
+            
             # Construire la requête de base
             query = supabase.table('athlete').select('*', count='exact')
             
