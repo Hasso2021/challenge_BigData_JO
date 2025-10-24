@@ -5,7 +5,7 @@ import '../styles/CountryPredictions.css';
 const CountryPredictions = () => {
   const [country, setCountry] = useState('France');
   const [year, setYear] = useState(2024);
-  const [model, setModel] = useState('ma');
+  const [model, setModel] = useState('best');
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

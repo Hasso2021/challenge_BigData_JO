@@ -4,7 +4,8 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api
 
 console.log('🔧 Configuration API:', {
   API_BASE_URL,
-  REACT_APP_API_URL: process.env.REACT_APP_API_URL
+  REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+  NODE_ENV: process.env.NODE_ENV
 });
 
 const api = axios.create({
@@ -19,6 +20,7 @@ api.interceptors.response.use(
   (response) => {
     console.log('✅ API Response:', {
       url: response.config.url,
+      fullURL: response.config.baseURL + response.config.url,
       status: response.status,
       method: response.config.method
     });
@@ -121,12 +123,12 @@ export const olympicDataService = {
   },
 
   // Prédictions
-  predictCountryMedals: (country, year = 2024, model = 'ma') => {
+  predictCountryMedals: (country, year = 2024, model = 'best') => {
     return api.get(`/predictions/country/${country}`, { 
       params: { year, model } 
     });
   },
-  predictTopCountries: (topN = 25, year = 2024, model = 'ma') => {
+  predictTopCountries: (topN = 25, year = 2024, model = 'best') => {
     return api.get('/predictions/top-countries', { 
       params: { top_n: topN, year, model } 
     });
